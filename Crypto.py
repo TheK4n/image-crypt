@@ -72,7 +72,7 @@ def encrypt(image_name: str, msg: str, key: str):
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
             break
-    img.save('result.bmp', 'BMP')
+    img.save('results\\result.bmp', 'BMP')
 
 
 def decrypt(image_name: str, key: str) -> str:

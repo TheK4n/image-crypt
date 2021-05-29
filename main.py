@@ -43,7 +43,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
         self.Debug_area_2.setText('Successfully decrypted image')
         if self.checkBox.isChecked():
-            with open('res.txt', 'w') as file:
+            with open('results\\res.txt', 'w') as file:
                 file.write(res)
 
 
