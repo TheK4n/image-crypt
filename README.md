@@ -52,7 +52,7 @@ pip install -r requirements.txt
 ```
 
 
-#### Использование через GUI:
+### Использование через GUI:
 ```
 python main.py
 ```
@@ -60,14 +60,13 @@ python main.py
 
 
 
-#### Использование через консоль:
+### Использование через консоль:
 
 Для **зашифровки**: 
 ```
 python encrypt.py <image_name> <message> <key>
 ```
 **Результат**: Сохраненная картинка _results\result.bmp_
-
 
 
 Для **расшифровки**: 
