@@ -9,6 +9,8 @@ _Исполнение [проекта](https://github.com/AlexGyver/crypto) [Ale
 mkdir ImageCrypt
 cd ImageCrypt
 git clone https://github.com/Pendosv/ImageCrypt.git
+virtualenv venv
+venv\Scripts\activate.bat
 pip install -r requirements.txt
 ```
 ----
