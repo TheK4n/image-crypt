@@ -1,10 +1,15 @@
-
+from os import mkdir
 from random import *
 from typing import *
+
 
 import numpy
 from PIL import Image, ImageDraw
 
+try:
+    mkdir('results')
+except FileExistsError:
+    pass
 
 def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
     """ """
@@ -88,6 +93,3 @@ def decrypt(image_name: str, key: str) -> str:
     return msg
 
 
-if __name__ == '__main__':
-    encrypt('resources\\test.jpg', 'hello', key='key')
-    print(decrypt('result.bmp', key='key'))
