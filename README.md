@@ -6,7 +6,6 @@
 <a id="chapter-0"></a>
 ## Описание проекта 
 
----
 Исполнение [проекта](https://github.com/AlexGyver/crypto) [AlexGyver'а](https://github.com/AlexGyver) на Python by [Pend0s](https://github.com/Pendosv)  
 Исходный ЯП: Processing
 
@@ -40,7 +39,7 @@ this_char |= (new_color & 0x7)
 <a id="chapter-1"></a>
 ## Инструкция:
 
----
+Создание виртуального окружения и установка зависимостей:
 
 ```
 mkdir Image_Crypt
