@@ -2,8 +2,6 @@ from os import mkdir
 from random import *
 from typing import *
 
-
-import numpy
 from PIL import Image, ImageDraw
 
 try:
@@ -23,10 +21,17 @@ def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
 
 def get_xy(array_: tuple[int, int], element: int) -> tuple[int, int]:
     height, width = array_
-    a = numpy.array(range(0, height * width)).reshape((height, width))
+    n = 0
+    mat = []
+    for i in range(height):
+        lst = []
+        for i in range(width):
+            lst.append(n)
+            n += 1
+        mat.append(lst)
 
     index_y = element // width
-    index_x = list(a[index_y]).index(element)
+    index_x = mat[index_y].index(element)
 
     return index_y, index_x
 
@@ -40,12 +45,12 @@ def get_encrypted_color(this_color: int, char: str) -> int:
     this_char = ord(char)
 
     # упаковка в RGB 323
-    new_color = (this_color & 0xF80000)  # 11111000 00000000 00000000
-    new_color |= (this_char & 0xE0) << 11  # 00000111 00000000 00000000
+    new_color = (this_color & 0xF80000)       # 11111000 00000000 00000000
+    new_color |= (this_char & 0xE0) << 11     # 00000111 00000000 00000000
     new_color |= (this_color & (0x3F << 10))  # 00000000 11111100 00000000
-    new_color |= (this_char & 0x18) << 5  # 00000000 00000011 00000000
-    new_color |= (this_color & (0x1F << 3))  # 00000000 00000000 11111000
-    new_color |= (this_char & 0x7)  # 00000000 00000000 00000111
+    new_color |= (this_char & 0x18) << 5      # 00000000 00000011 00000000
+    new_color |= (this_color & (0x1F << 3))   # 00000000 00000000 11111000
+    new_color |= (this_char & 0x7)            # 00000000 00000000 00000111
 
     return new_color
 
@@ -55,7 +60,7 @@ def get_decrypted_char(new_color: int) -> str:
 
     # распаковка из RGB 323 обратно в байт
     this_char |= (new_color & 0x70000) >> 11  # 00000111 00000000 00000000 -> 00000000 00000000 11100000
-    this_char |= (new_color & 0x300) >> 5  # 00000000 00000011 00000000 -> 00000000 00000000 00011000
+    this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 00000000 00000000 00011000
     this_char |= (new_color & 0x7)
 
     return chr(this_char)
@@ -85,6 +90,7 @@ def decrypt(image_name: str, key: str) -> str:
     img = Image.open(image_name)
     pix = img.load()
     lst = get_random_list(img.size[0]*img.size[1], key)
+
     msg = ''
     for i in lst:
         char = get_decrypted_char(rgb_to_dec(pix[get_xy(img.size, i)]))
