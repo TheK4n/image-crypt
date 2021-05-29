@@ -78,7 +78,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("CryptoImage", "CryptoImage"))
         self.pushButton.setText(_translate("MainWindow", "Load Image"))
         self.text_input.setPlaceholderText(_translate("MainWindow", "Input text"))
         self.lineEdit.setPlaceholderText(_translate("MainWindow", "Input key..."))
