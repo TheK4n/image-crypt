@@ -1,5 +1,5 @@
 from os import mkdir
-from random import *
+from random import seed, shuffle
 from typing import *
 
 from PIL import Image, ImageDraw
