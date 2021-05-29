@@ -37,7 +37,6 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
             self.Debug_area_2.setText('Image to decrypt: ' + directory.split('/')[-1])
 
     def decrypt_image(self):
-        print(1)
         res = decrypt(self.image_directory_dec, self.lineEdit_2.text())
         self.text_output.setText(res)
 
