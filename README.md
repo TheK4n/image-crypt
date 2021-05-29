@@ -19,6 +19,9 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
+[![Пример](https://prnt.sc/13kc8xq)]()
+
+
 ---
 
 ### Использование через консоль:
