@@ -42,7 +42,7 @@ this_char |= (new_color & 0x7)
 
 ---
 
-```shell
+```
 mkdir Image_Crypt
 cd Image_Crypt
 git clone https://github.com/Pendosv/ImageCrypt.git
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 
 #### Использование через GUI:
-```shell
+```
 python main.py
 ```
 [![Пример](https://i.ibb.co/pvGxP0f/crypto.png)]()
