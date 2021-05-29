@@ -57,7 +57,6 @@ def get_encrypted_color(this_color: int, char: str) -> int:
 def get_decrypted_char(new_color: int) -> str:
     this_char = 0
 
-    # распаковка из RGB 323 обратно в байт
     this_char |= (new_color & 0x70000) >> 11  # 00000111 00000000 00000000 -> 00000000 00000000 11100000
     this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 00000000 00000000 00011000
     this_char |= (new_color & 0x7)
