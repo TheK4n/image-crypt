@@ -25,7 +25,7 @@ def get_xy(array_: tuple[int, int], element: int) -> tuple[int, int]:
     mat = []
     for i in range(height):
         lst = []
-        for i in range(width):
+        for i2 in range(width):
             lst.append(n)
             n += 1
         mat.append(lst)
