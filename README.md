@@ -5,20 +5,21 @@ _Исполнение [проекта](https://github.com/AlexGyver/crypto) [Ale
 ---
 
 ### Инструкция:
-1. Создание директории
-2. cd <имя_созданной_директории>
-3. git clone https://github.com/Pendosv/ImageCrypt.git
-4. pip install -r requirements.txt
-
+```
+mkdir ImageCrypt
+cd ImageCrypt
+git clone https://github.com/Pendosv/ImageCrypt.git
+pip install -r requirements.txt
+```
 ----
 
-Использование через gui:
-
-5. python main.py
-
+### Использование через gui:
+```
+python main.py
+```
 ---
 
-Использование через консоль:
+### Использование через консоль:
 
 Для **зашифровки**: 
 ```
