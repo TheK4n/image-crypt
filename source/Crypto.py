@@ -11,7 +11,6 @@ except FileExistsError:
 
 
 def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
-    """ """
     seed(key)
     lst = [i for i in range(length)]
     shuffle(lst)
