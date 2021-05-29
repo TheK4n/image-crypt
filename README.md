@@ -2,6 +2,8 @@
 
 _Исполнение [проекта](https://github.com/AlexGyver/crypto) [AlexGyver'а](https://github.com/AlexGyver) на Python by [Pend0s](https://github.com/Pendosv)_
 
+Design: [Пашушка](https://github.com/PAPASKAS)
+
 ---
 
 ### Инструкция:
