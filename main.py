@@ -1,7 +1,7 @@
 import sys
-from Crypto import *
+from source.Crypto import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-import design
+from source import design
 
 
 class MainWindow(QMainWindow, design.Ui_MainWindow):

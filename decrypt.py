@@ -1,5 +1,5 @@
 import sys
-from Crypto import *
+from source.Crypto import *
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:

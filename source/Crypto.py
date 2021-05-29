@@ -7,9 +7,10 @@ import numpy
 from PIL import Image, ImageDraw
 
 try:
-    mkdir('results')
+    mkdir('../results')
 except FileExistsError:
     pass
+
 
 def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
     """ """
@@ -91,5 +92,3 @@ def decrypt(image_name: str, key: str) -> str:
             break
         msg += char
     return msg
-
-
