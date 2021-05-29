@@ -6,8 +6,8 @@ _Исполнение [проекта](https://github.com/AlexGyver/crypto) [Ale
 
 ### Инструкция:
 ```
-mkdir ImageCrypt
-cd ImageCrypt
+mkdir Image_Crypt
+cd Image_Crypt
 git clone https://github.com/Pendosv/ImageCrypt.git
 virtualenv venv
 venv\Scripts\activate.bat
@@ -15,12 +15,11 @@ pip install -r requirements.txt
 ```
 ----
 
-### Использование через gui:
+### Использование через GUI:
 ```
 python main.py
 ```
 [![Пример](https://i.ibb.co/pvGxP0f/crypto.png)]()
-
 
 ---
 
