@@ -42,9 +42,9 @@ this_char |= (new_color & 0x7)
 Создание виртуального окружения и установка зависимостей:
 
 ```
-mkdir Image_Crypt
-cd Image_Crypt
+
 git clone https://github.com/Pendosv/ImageCrypt.git
+cd ImageCrypt
 virtualenv venv
 venv\Scripts\activate.bat
 pip install -r requirements.txt
