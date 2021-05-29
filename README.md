@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-[![Пример](https://ibb.co/VWrtNjg)]()
+[![Пример](https://i.ibb.co/pvGxP0f/crypto.png)]()
 
 
 ---
