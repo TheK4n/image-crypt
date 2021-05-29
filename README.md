@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-[![Пример](https://prnt.sc/13kc8xq)]()
+[![Пример](https://ibb.co/VWrtNjg)]()
 
 
 ---
