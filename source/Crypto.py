@@ -1,3 +1,4 @@
+import os
 from os import mkdir
 from random import seed, shuffle
 from typing import *
@@ -89,7 +90,9 @@ def encrypt(image_name: str, msg: str, key: str):
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
             break
-    img.save('results\\result.bmp', 'BMP')
+    n = len(os.listdir('results'))
+    print(n)
+    img.save(f'results\\result{n+1}.bmp', 'BMP')
 
 
 def decrypt(image_name: str, key: str) -> str:
