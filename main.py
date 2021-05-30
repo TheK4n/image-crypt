@@ -48,6 +48,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
             error_dialog.setInformativeText('Message size more than image size!')
             error_dialog.setWindowTitle("Error")
             error_dialog.exec_()
+            return
 
     def btn_load_image_clicked_dec(self):
         directory = QFileDialog.getOpenFileName(self, "Выберите картинку", filter='*.jpg *.bmp *.png')[0]

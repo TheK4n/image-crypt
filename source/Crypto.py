@@ -56,6 +56,8 @@ def rgb_to_dec(rgb: tuple[int, int, int]) -> int:
 
 def get_encrypted_color(this_color: int, char: str) -> int:
     this_char = ord(char)
+    if this_char > 1000:
+        this_char -= 890
 
     # упаковка в RGB 323
     new_color = (this_color & 0xF80000)       # 11111000 00000000 00000000
@@ -70,10 +72,12 @@ def get_encrypted_color(this_color: int, char: str) -> int:
 
 def get_decrypted_char(new_color: int) -> str:
     this_char = 0
-
     this_char |= (new_color & 0x70000) >> 11  # 00000111 00000000 00000000 -> 00000000 00000000 11100000
     this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 00000000 00000000 00011000
     this_char |= (new_color & 0x7)
+
+    if this_char > 130:
+        this_char += 890
 
     return chr(this_char)
 
