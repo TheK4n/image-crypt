@@ -95,12 +95,10 @@ def encrypt(image_name: str, msg: str, key: str):
     if len(msg) > size:
         raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
 
-    lst = get_random_list(size, key)
-
     matrix = get_matrix(img.size)  # матрица для поиска по значению
 
     gen_msg = (i for i in msg)  # генератор
-    for i in lst:
+    for i in get_random_list(size, key):
         coord = get_xy(matrix, i)  # координаты
         try:
             # рисует зашифрованный пиксель
@@ -115,12 +113,10 @@ def encrypt(image_name: str, msg: str, key: str):
 def decrypt(image_name: str, key: str) -> str:
     img = Image.open(image_name)
     pix = img.load()
-    lst = get_random_list(img.size[0]*img.size[1], key)
-
     matrix = get_matrix(img.size)
 
     msg = ''
-    for i in lst:
+    for i in get_random_list(img.size[0]*img.size[1], key):
         char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, i)]))
         if char == '\0':  # завершает цикл когда дошел до метки
             break
