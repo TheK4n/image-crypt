@@ -18,19 +18,25 @@ def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
     return lst
 
 
-def get_xy(array_: tuple[int, int], element: int) -> tuple[int, int]:
-    height, width = array_
+def get_matrix(array_: tuple[int, int]) -> list:
+
     n = 0
     mat = []
+    height, width = array_
     for i in range(height):
         lst = []
         for i2 in range(width):
             lst.append(n)
             n += 1
         mat.append(lst)
+    return mat
 
+
+def get_xy(matrix: list, element: int) -> tuple[int, int]:
+
+    height, width = len(matrix), len(matrix[0])
     index_y = element // width
-    index_x = mat[index_y].index(element)
+    index_x = matrix[index_y].index(element)
 
     return index_y, index_x
 
@@ -74,9 +80,11 @@ def encrypt(image_name: str, msg: str, key: str):
 
     lst = get_random_list(img.size[0]*img.size[1], key)
 
+    matrix = get_matrix(img.size)
+
     gen_msg = (i for i in msg)
     for i in lst:
-        coord = get_xy(img.size, i)
+        coord = get_xy(matrix, i)
         try:
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
@@ -89,9 +97,11 @@ def decrypt(image_name: str, key: str) -> str:
     pix = img.load()
     lst = get_random_list(img.size[0]*img.size[1], key)
 
+    matrix = get_matrix(img.size)
+
     msg = ''
     for i in lst:
-        char = get_decrypted_char(rgb_to_dec(pix[get_xy(img.size, i)]))
+        char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, i)]))
         if char == '\0':
             break
         msg += char
