@@ -5,6 +5,11 @@ from typing import *
 
 from PIL import Image, ImageDraw
 
+
+class MoreThanImgError(Exception):
+    pass
+
+
 try:
     mkdir('../results')
 except FileExistsError:
@@ -81,7 +86,12 @@ def encrypt(image_name: str, msg: str, key: str):
     pix = img.load()  # пиксели
     img_new = ImageDraw.Draw(img)
 
-    lst = get_random_list(img.size[0]*img.size[1], key)
+    size = img.size[0]*img.size[1]
+
+    if len(msg) > size:
+        raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
+
+    lst = get_random_list(size, key)
 
     matrix = get_matrix(img.size)  # матрица для поиска по значению
 
