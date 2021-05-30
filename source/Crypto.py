@@ -32,9 +32,9 @@ def get_matrix(array_: tuple[int, int]) -> list:
     return mat
 
 
-def get_xy(matrix: list, array_: tuple[int, int], element: int) -> tuple[int, int]:
+def get_xy(matrix: list, element: int) -> tuple[int, int]:
 
-    height, width = array_
+    height, width = len(matrix), len(matrix[0])
     index_y = element // width
     index_x = matrix[index_y].index(element)
 
@@ -84,7 +84,7 @@ def encrypt(image_name: str, msg: str, key: str):
 
     gen_msg = (i for i in msg)
     for i in lst:
-        coord = get_xy(matrix, img.size, i)
+        coord = get_xy(matrix, i)
         try:
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
@@ -101,7 +101,7 @@ def decrypt(image_name: str, key: str) -> str:
 
     msg = ''
     for i in lst:
-        char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, img.size, i)]))
+        char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, i)]))
         if char == '\0':
             break
         msg += char
