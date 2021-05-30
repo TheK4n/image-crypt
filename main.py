@@ -41,10 +41,12 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
         res = decrypt(self.image_directory_dec, self.lineEdit_2.text())
         self.text_output.setText(res)
 
-        self.Debug_area_2.setText('Successfully decrypted image')
         if self.checkBox.isChecked():
             with open('results\\res.txt', 'w') as file:
                 file.write(res)
+            self.Debug_area_2.setText('Successfully decrypted image, saved to res.txt')
+        else:
+            self.Debug_area_2.setText('Successfully decrypted image')
 
 
 def main():
