@@ -29,7 +29,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
         encrypt(self.image_directory_enc, self.text_input.toPlainText(), self.lineEdit.text())
         n = len(os.listdir('results'))
-        self.Debug_area_1.setText(f'Encrypted image saved as result{n+1}.bmp')
+        self.Debug_area_1.setText(f'Encrypted image saved as result{n}.bmp')
 
     def btn_load_image_clicked_dec(self):
         directory = QFileDialog.getOpenFileName(self, "Выберите картинку", filter='*.jpg *.bmp *.png')[0]

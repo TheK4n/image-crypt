@@ -91,7 +91,6 @@ def encrypt(image_name: str, msg: str, key: str):
         except StopIteration:
             break
     n = len(os.listdir('results'))
-    print(n)
     img.save(f'results\\result{n+1}.bmp', 'BMP')
 
 
