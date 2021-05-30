@@ -109,7 +109,7 @@ def encrypt(image_name: str, msg: str, key: str):
             break
     # кол-во картинок
     n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(os.listdir('results')))))
-    img.save(f'results\\result{n+1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
+    img.save(f'results\\encrypted_{n+1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
 
 
 def decrypt(image_name: str, key: str) -> str:

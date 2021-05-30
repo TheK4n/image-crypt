@@ -3,6 +3,6 @@
 /venv/
 /.run/
 *.py[cod]
-/results/result[2-9].bmp
+/results/encrypted_[2-9].bmp
 /results/res.txt
 
