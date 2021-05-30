@@ -38,7 +38,8 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
         try:
             encrypt(self.image_directory_enc, self.text_input.toPlainText(), self.lineEdit.text())
-            n = len(os.listdir('results'))
+
+            n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(os.listdir('results')))))
             self.Debug_area_1.setText(f'Encrypted image saved as result{n}.bmp')
         except MoreThanImgError:
             error_dialog = QMessageBox()

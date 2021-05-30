@@ -103,7 +103,8 @@ def encrypt(image_name: str, msg: str, key: str):
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
             break
-    n = len(os.listdir('results'))  # кол-во картинок
+    # кол-во картинок
+    n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(os.listdir('results')))))
     img.save(f'results\\result{n+1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
 
 
