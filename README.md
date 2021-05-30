@@ -55,7 +55,7 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-[![Пример](source\logo.png)]()
+![Пример](source\logo.png)()
 
 
 
