@@ -55,8 +55,7 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-
-[![Пример](https://i.ibb.co/pvGxP0f/crypto.png)]()
+[![Пример](source\logo.png)]()
 
 
 
