@@ -3,8 +3,7 @@ import sys
 from PyQt5 import QtGui
 
 from source.Crypto import *
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QSystemTrayIcon
-from PyQt5.QtWinExtras import QWinTaskbarButton, QWinTaskbarProgress
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from source import design
 
 
