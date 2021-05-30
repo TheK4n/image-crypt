@@ -51,7 +51,6 @@ if this_char > 130:
 Создание виртуального окружения и установка зависимостей:
 
 ```
-
 git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
 virtualenv venv
