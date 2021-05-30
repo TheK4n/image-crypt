@@ -34,7 +34,16 @@ this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 000000
 this_char |= (new_color & 0x7)
 ```
 
+Костыль для русских букв:
+```python
+# Для зашифровки
+if this_char > 1000:
+    this_char -= 890
 
+# Для расшифровки
+if this_char > 130:
+    this_char += 890
+```
 
 <a id="chapter-1"></a>
 ## Инструкция:
