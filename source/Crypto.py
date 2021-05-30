@@ -12,6 +12,7 @@ except FileExistsError:
 
 
 def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
+    """Возвращает рандомный список без повторений с заданным ключем key и длиной length"""
     seed(key)
     lst = [i for i in range(length)]
     shuffle(lst)
@@ -20,7 +21,7 @@ def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
 
 
 def get_matrix(array_: tuple[int, int]) -> list:
-
+    """Возвращает двумерный массив в заданных размерах от 0 до height*width"""
     n = 0
     mat = []
     height, width = array_
@@ -34,7 +35,7 @@ def get_matrix(array_: tuple[int, int]) -> list:
 
 
 def get_xy(matrix: list, element: int) -> tuple[int, int]:
-
+    """Возвращает кортеж из координат, находит координаты по порядковому номеру"""
     height, width = len(matrix), len(matrix[0])
     index_y = element // width
     index_x = matrix[index_y].index(element)
@@ -43,6 +44,7 @@ def get_xy(matrix: list, element: int) -> tuple[int, int]:
 
 
 def rgb_to_dec(rgb: tuple[int, int, int]) -> int:
+    """Возвращает число, переводит RGB в десятичный формат"""
     r, g, b = rgb
     return b * 65536 + g * 256 + r
 
@@ -73,25 +75,26 @@ def get_decrypted_char(new_color: int) -> str:
 
 def encrypt(image_name: str, msg: str, key: str):
 
-    msg = msg + '\0'
+    msg = msg + '\0'  # добавляет в конец сообщения как метку
 
     img = Image.open(image_name)
-    pix = img.load()
+    pix = img.load()  # пиксели
     img_new = ImageDraw.Draw(img)
 
     lst = get_random_list(img.size[0]*img.size[1], key)
 
-    matrix = get_matrix(img.size)
+    matrix = get_matrix(img.size)  # матрица для поиска по значению
 
-    gen_msg = (i for i in msg)
+    gen_msg = (i for i in msg)  # генератор
     for i in lst:
-        coord = get_xy(matrix, i)
+        coord = get_xy(matrix, i)  # координаты
         try:
+            # рисует зашифрованный пиксель
             img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
         except StopIteration:
             break
-    n = len(os.listdir('results'))
-    img.save(f'results\\result{n+1}.bmp', 'BMP')
+    n = len(os.listdir('results'))  # кол-во картинок
+    img.save(f'results\\result{n+1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
 
 
 def decrypt(image_name: str, key: str) -> str:
@@ -104,7 +107,7 @@ def decrypt(image_name: str, key: str) -> str:
     msg = ''
     for i in lst:
         char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, i)]))
-        if char == '\0':
+        if char == '\0':  # завершает цикл когда дошел до метки
             break
         msg += char
     return msg
