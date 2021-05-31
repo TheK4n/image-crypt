@@ -1,7 +1,7 @@
-import os
-from os import mkdir
-from random import seed, shuffle
 from typing import *
+
+from os import mkdir, listdir
+from random import seed, shuffle
 
 from PIL import Image, ImageDraw
 
@@ -25,11 +25,10 @@ def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
     return lst
 
 
-def get_matrix(array_: tuple[int, int]) -> list:
+def get_matrix(height: int, width: int) -> list:
     """Возвращает двумерный массив в заданных размерах от 0 до height*width"""
     n = 0
     mat = []
-    height, width = array_
     for i in range(height):
         lst = []
         for i2 in range(width):
@@ -91,11 +90,10 @@ def encrypt(image_name: str, msg: str, key: str):
     img_new = ImageDraw.Draw(img)
 
     size = img.size[0]*img.size[1]
-
     if len(msg) > size:
         raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
 
-    matrix = get_matrix(img.size)  # матрица для поиска по значению
+    matrix = get_matrix(*img.size)  # матрица для поиска по значению
 
     gen_msg = (i for i in msg)  # генератор
     for i in get_random_list(size, key):
@@ -106,14 +104,14 @@ def encrypt(image_name: str, msg: str, key: str):
         except StopIteration:
             break
     # кол-во файлов в формате bmp
-    n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(os.listdir('results')))))
+    n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
     img.save(f'results\\encrypted_{n+1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
 
 
 def decrypt(image_name: str, key: str) -> str:
     img = Image.open(image_name)
     pix = img.load()
-    matrix = get_matrix(img.size)
+    matrix = get_matrix(*img.size)
 
     msg = ''
     for i in get_random_list(img.size[0]*img.size[1], key):
