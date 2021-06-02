@@ -2,9 +2,9 @@ import sys
 
 from PyQt5 import QtGui
 
-from source.Crypto import *
+from src.Crypto import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
-from source import design
+from src import design
 
 
 class MainWindow(QMainWindow, design.Ui_MainWindow):
@@ -83,7 +83,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
 def main():
     app = QApplication(sys.argv)  # Новый экземпляр QApplication
-    app.setWindowIcon(QtGui.QIcon('source\\icon.ico'))
+    app.setWindowIcon(QtGui.QIcon('src\\icon.ico'))
     window = MainWindow()  # Создаём объект класса ExampleApp
     window.show()
     sys.exit(app.exec_())  # запускаем приложение
