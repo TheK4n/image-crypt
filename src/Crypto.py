@@ -102,7 +102,7 @@ def decrypt(image_name: str, key: str) -> str:
         except StopIteration:
             break
         if char == '\0':  # завершает цикл когда дошел до метки
-            seed()
             break
         msg += char
+    seed()
     return msg
