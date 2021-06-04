@@ -1,5 +1,5 @@
 from os import mkdir, listdir
-from random import seed, shuffle
+from random import seed, randint
 from typing import *
 
 from PIL import Image, ImageDraw
@@ -15,35 +15,10 @@ except FileExistsError:
     pass
 
 
-def get_random_list(length: int, key: Union[int, float, str]) -> list[int]:
-    """Возвращает рандомный список без повторений с заданным ключем key и длиной length"""
-    seed(key)
-    lst = [i for i in range(length)]
-    shuffle(lst)
-    seed()
-    return lst
-
-
-def get_matrix(height: int, width: int) -> list:
-    """Возвращает двумерный массив в заданных размерах от 0 до height*width"""
-    n = 0
-    mat = []
-    for i in range(height):
-        lst = []
-        for i2 in range(width):
-            lst.append(n)
-            n += 1
-        mat.append(lst)
-    return mat
-
-
-def get_xy(matrix: list, element: int) -> tuple[int, int]:
-    """Возвращает кортеж из координат, находит координаты по порядковому номеру"""
-    height, width = len(matrix), len(matrix[0])
-    index_y = element // width
-    index_x = matrix[index_y].index(element)
-
-    return index_y, index_x
+def gen_coords(size: tuple[int, int]):
+    height, width = size
+    while True:
+        yield randint(0, height), randint(0, width)
 
 
 def rgb_to_dec(rgb: tuple[int, int, int]) -> int:
@@ -91,16 +66,22 @@ def encrypt(image_name: str, msg: str, key: str):
     if len(msg) > size:
         raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
 
-    matrix = get_matrix(*img.size)  # матрица для поиска по значению
+    checked = []
 
     gen_msg = (i for i in msg)  # генератор
-    for i in get_random_list(size, key):
-        coord = get_xy(matrix, i)  # координаты
-        try:
-            # рисует зашифрованный пиксель
-            img_new.point(coord, get_encrypted_color(rgb_to_dec(pix[coord]), next(gen_msg)))
-        except StopIteration:
-            break
+    seed(key)
+    for i in gen_coords(img.size):
+        if i in checked:
+            continue
+        else:
+            try:
+                # рисует зашифрованный пиксель
+                img_new.point(i, get_encrypted_color(rgb_to_dec(pix[i]), next(gen_msg)))
+                checked.append(i)
+            except StopIteration:
+                seed()
+                break
+    seed()
     # кол-во файлов в формате bmp
     n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
     img.save(f'results\\encrypted_{n + 1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
@@ -110,11 +91,18 @@ def decrypt(image_name: str, key: str) -> str:
     img = Image.open(image_name)
     pix = img.load()
 
-    matrix = get_matrix(*img.size)
+    checked = []
     msg = ''
-    for i in get_random_list(img.size[0] * img.size[1], key):
-        char = get_decrypted_char(rgb_to_dec(pix[get_xy(matrix, i)]))
+    seed(key)
+    for i in gen_coords(img.size):
+        if i in checked:
+            continue
+        try:
+            char = get_decrypted_char(rgb_to_dec(pix[i]))
+        except StopIteration:
+            break
         if char == '\0':  # завершает цикл когда дошел до метки
+            seed()
             break
         msg += char
     return msg
