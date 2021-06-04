@@ -16,9 +16,11 @@ except FileExistsError:
 
 
 def gen_coords(size: tuple[int, int]):
-    height, width = size
+    width, height = size
+    width -= 1
+    height -= 1
     while True:
-        yield randint(0, height), randint(0, width)
+        yield randint(0, width), randint(0, height)
 
 
 def rgb_to_dec(rgb: tuple[int, int, int]) -> int:
@@ -63,6 +65,8 @@ def encrypt(image_name: str, msg: str, key: str):
     img_new = ImageDraw.Draw(img)
 
     size = img.size[0] * img.size[1]
+    print(size)
+    print(img.size, 'img.size')
     if len(msg) > size:
         raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
 
@@ -71,17 +75,20 @@ def encrypt(image_name: str, msg: str, key: str):
     gen_msg = (i for i in msg)  # генератор
     seed(key)
     for i in gen_coords(img.size):
+        try:
+            char = next(gen_msg)
+        except StopIteration:
+            break
+
         if i in checked:
             continue
         else:
-            try:
-                # рисует зашифрованный пиксель
-                img_new.point(i, get_encrypted_color(rgb_to_dec(pix[i]), next(gen_msg)))
-                checked.append(i)
-            except StopIteration:
-                seed()
-                break
+            # рисует зашифрованный пиксель
+            img_new.point(i, get_encrypted_color(rgb_to_dec(pix[i]), char))
+            checked.append(i)
+
     seed()
+
     # кол-во файлов в формате bmp
     n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
     img.save(f'results\\encrypted_{n + 1}.bmp', 'BMP')  # сохраняет зашифрованную картинку
