@@ -108,9 +108,9 @@ def decrypt(image_name: str, key: str) -> str:
         if n >= img.size[0] * img.size[1]:
             break
         char = get_decrypted_char(rgb_to_dec(pix[i]))
+        n += 1
         if char == '\0':  # завершает цикл когда дошел до метки
             break
-
         if i in checked:
             continue
         else:
