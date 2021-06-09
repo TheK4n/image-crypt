@@ -11,5 +11,7 @@ if __name__ == '__main__':
             print('[X] All arguments must be string!')
             sys.exit(-1)
 
-    print('[*] Result:', decrypt(sys.argv[1], sys.argv[2]))
+    crt = CryptImage_save(sys.argv[1])
+
+    print('[*] Result:', crt.get_msg_from_image(sys.argv[2]))
     sys.exit(1)

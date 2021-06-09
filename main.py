@@ -40,7 +40,10 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
             return
 
         try:
-            encrypt(self.image_directory_enc, self.text_input.toPlainText(), self.lineEdit.text())
+
+            crt = CryptImage_save(self.image_directory_enc)
+
+            crt.save_encrypted_image(self.text_input.toPlainText(), self.lineEdit.text())
 
             n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
             self.Debug_area_1.setText(f'Encrypted image saved as encrypted_{n}.bmp')
@@ -70,7 +73,9 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
             error_dialog.exec_()
             return
 
-        res = decrypt(self.image_directory_dec, self.lineEdit_2.text())
+        crt = CryptImage_save(self.image_directory_dec)
+
+        res = crt.get_msg_from_image(self.lineEdit_2.text())
         self.text_output.setText(res)
 
         if self.checkBox.isChecked():

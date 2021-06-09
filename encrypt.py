@@ -11,7 +11,8 @@ if __name__ == '__main__':
             print('[X] All arguments must be string!')
             sys.exit(-1)
 
-    encrypt(sys.argv[1], sys.argv[2], sys.argv[3])
+    crt = CryptImage_save(sys.argv[1])
+    crt.save_encrypted_image(sys.argv[2], sys.argv[3])
 
     n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
     print(f'[*] Image saved in results as encrypted_{n}.bmp')
