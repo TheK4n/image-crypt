@@ -16,4 +16,4 @@ if __name__ == '__main__':
 
     n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
     print(f'[*] Image saved in results as encrypted_{n}.bmp')
-    sys.exit(1)
+    sys.exit(1)  # Выход
