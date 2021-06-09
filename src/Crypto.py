@@ -121,7 +121,7 @@ class CryptImage_save(CryptImage):
 
     def __make_dir(self):
         try:
-            mkdir('\\'.join(self.image_name.split('\\')[:-1]) + 'results')
+            mkdir('\\'.join(self.image_name.split('\\')[:-1]) + '\\results')
         except FileExistsError:
             pass
 
