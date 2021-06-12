@@ -1,6 +1,9 @@
 # Crypto image
 
 <p align="center">
+  <a href="https://github.com/Pendosv">
+    <img src="https://img.shields.io/github/followers/Pendosv?label=Follow&style=social">
+  </a>
   <a href="https://github.com/Pendosv/ImageCrypt">
     <img src="https://img.shields.io/github/stars/Pendosv/ImageCrypt?style=social">
   </a>
