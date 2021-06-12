@@ -1,7 +1,6 @@
 
 
 <p align="center">
-  asdasd
   <a href="https://github.com/Pendosv">
     <img src="https://img.shields.io/github/followers/Pendosv?label=Follow&style=social">
   </a>
