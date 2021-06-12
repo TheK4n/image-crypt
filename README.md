@@ -1,6 +1,6 @@
 
 
-<h1 align="center">{project_path}</h1>
+<h1 align="center">ImageCrypt</h1>
 
 <p align="center">
   <a href="https://github.com/Pendosv">
@@ -10,6 +10,7 @@
     <img src="https://img.shields.io/github/stars/Pendosv/ImageCrypt?style=social">
   </a>
 </p>
+
 ---
 
 * [Описание проекта](#chapter-0)
