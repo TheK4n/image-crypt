@@ -1,6 +1,9 @@
 
 
 <p align="center">
+  <a href="https://github.com/Pendosv/ImageCrypt">
+    <h1>ImageCrypt</h1>
+  </a>
   <a href="https://github.com/Pendosv">
     <img src="https://img.shields.io/github/followers/Pendosv?label=Follow&style=social">
   </a>
@@ -10,8 +13,6 @@
 </p>
 
 ---
-
-# Crypto image
 
 * [Описание проекта](#chapter-0)
 * [Инструкция](#chapter-1)
