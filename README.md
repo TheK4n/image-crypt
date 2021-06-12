@@ -1,5 +1,7 @@
 
 
+<h1 align="center">{project_path}</h1>
+
 <p align="center">
   <a href="https://github.com/Pendosv">
     <img src="https://img.shields.io/github/followers/Pendosv?label=Follow&style=social">
@@ -8,7 +10,6 @@
     <img src="https://img.shields.io/github/stars/Pendosv/ImageCrypt?style=social">
   </a>
 </p>
-
 ---
 
 * [Описание проекта](#chapter-0)
@@ -93,3 +94,17 @@ python encrypt.py <image_name> <message> <key>
 python decrypt.py <image_name> <key>
 ```
 **Результат**: Расшифрованное сообщение
+
+
+<p align="center">
+  Contact with me
+</p>
+<p align="center">
+  <a href="T.me/Pend0s">
+    <img src="https://raw.githubusercontent.com/Pendosv/resources/main/telegram.png" width="40" height="40">
+  </a>
+    <a href="mailto:djvlad967891@gmail.com">
+        <img src="https://raw.githubusercontent.com/Pendosv/resources/main/mail.png" width="40" height="40">
+      </a>
+</p>
+
