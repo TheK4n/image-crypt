@@ -1,4 +1,4 @@
-# Crypto image
+
 
 <p align="center">
   <a href="https://github.com/Pendosv">
@@ -8,6 +8,10 @@
     <img src="https://img.shields.io/github/stars/Pendosv/ImageCrypt?style=social">
   </a>
 </p>
+
+---
+
+# Crypto image
 
 * [Описание проекта](#chapter-0)
 * [Инструкция](#chapter-1)
