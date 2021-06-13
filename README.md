@@ -60,7 +60,7 @@ if this_char > 130:
 <a id="chapter-1"></a>
 ## Installation:
 
-Clone repository, install virtual environment and installing dependencies:
+Clone repository, installing virtual environment and dependencies:
 
 ```
 git clone https://github.com/Pendosv/ImageCrypt.git
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-[![Пример](https://i.ibb.co/pvGxP0f/crypto.png)]()
+[![Example](https://i.ibb.co/pvGxP0f/crypto.png)]()
 
 
 
@@ -101,7 +101,7 @@ python decrypt.py <image_name> <key>
   Contact with me
 </p>
 <p align="center">
-  <a href="T.me/Pend0s">
+  <a href="https://T.me/Pend0s">
     <img src="https://raw.githubusercontent.com/Pendosv/resources/main/telegram.png" width="40" height="40">
   </a>
     <a href="mailto:djvlad967891@gmail.com">
