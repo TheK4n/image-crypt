@@ -11,19 +11,19 @@
   </a>
 </p>
 
-* [Описание проекта](#chapter-0)
-* [Инструкция](#chapter-1)
+* [Project description](#chapter-0)
+* [Installation](#chapter-1)
+* [Usage](#chapter-2)
 
 
 <a id="chapter-0"></a>
-## Описание проекта 
+## Project description 
 
-Исполнение [проекта](https://github.com/AlexGyver/crypto) [AlexGyver'а](https://github.com/AlexGyver) на Python by [Pend0s](https://github.com/Pendosv)  
-Исходный ЯП: Processing
+[Project](https://github.com/AlexGyver/crypto) [AlexGyver](https://github.com/AlexGyver) on Python by [Pend0s](https://github.com/Pendosv)
 
 _Design by [Пашушка](https://github.com/PAPASKAS)_
 
-Программа упаковывает байт символа в десятичное представление rgb:
+Byte packing in decimal rgb:
 ```python
 this_color = b * 65536 + g * 256 + r
 this_char = ord(char)
@@ -36,7 +36,7 @@ new_color |= (this_color & (0x1F << 3))   # 00000000 00000000 11111000
 new_color |= (this_char & 0x7)            # 00000000 00000000 00000111
 ```
 
-Распаковка производится следующим методом:
+Unpacking byte:
 ```python
 new_color = b * 65536 + g * 256 + r
 
@@ -46,21 +46,21 @@ this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 000000
 this_char |= (new_color & 0x7)
 ```
 
-Костыль для русских букв:
+Method for russian symbols:
 ```python
-# Для зашифровки
+# Encryption
 if this_char > 1000:
     this_char -= 890
 
-# Для расшифровки
+# Decryption
 if this_char > 130:
     this_char += 890
 ```
 
 <a id="chapter-1"></a>
-## Инструкция:
+## Installation:
 
-Создание виртуального окружения и установка зависимостей:
+Clone repository, install virtual environment and installing dependencies:
 
 ```
 git clone https://github.com/Pendosv/ImageCrypt.git
@@ -70,8 +70,10 @@ venv\Scripts\activate.bat
 pip install -r requirements.txt
 ```
 
+<a id="chapter-2"></a>
+## Usage
 
-### Использование через GUI:
+### GUI:
 ```
 python main.py
 ```
@@ -79,20 +81,20 @@ python main.py
 
 
 
-### Использование через консоль:
+### Console:
 
-Для **зашифровки**: 
+For **encryption**: 
 ```
 python encrypt.py <image_name> <message> <key>
 ```
-**Результат**: Сохраненная картинка _results\result.bmp_
+**Result**: saved image _results\result.bmp_
 
 
-Для **расшифровки**: 
+For **decryption**: 
 ```
 python decrypt.py <image_name> <key>
 ```
-**Результат**: Расшифрованное сообщение
+**Result**: decrypted text
 
 
 <p align="center">
