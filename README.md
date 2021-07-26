@@ -63,8 +63,8 @@ if this_char > 130:
 Clone repository, installing virtual environment and dependencies:
 
 ```bash
-git clone https://github.com/Pendosv/{project_path}.git
-cd {project_path}
+git clone https://github.com/Pendosv/ImageCrypt.git
+cd ImageCrypt
 virtualenv venv
 source venv\Scripts\activate
 pip install -r requirements.txt
