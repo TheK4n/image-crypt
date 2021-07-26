@@ -102,10 +102,10 @@ python decrypt.py <image_name> <key>
 </p>
 <p align="center">
   <a href="https://T.me/Pend0s">
-    <img src="https://raw.githubusercontent.com/Pendosv/resources/main/telegram.png" width="40" height="40">
+    <img src="https://raw.githubusercontent.com/Pendosv/Pendosv/main/img/telegram.png" width="40" height="40">
   </a>
     <a href="mailto:djvlad967891@gmail.com">
-        <img src="https://raw.githubusercontent.com/Pendosv/resources/main/mail.png" width="40" height="40">
+        <img src="https://raw.githubusercontent.com/Pendosv/Pendosv/main/img/mail.png" width="40" height="40">
       </a>
 </p>
 
