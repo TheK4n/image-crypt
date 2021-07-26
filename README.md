@@ -62,11 +62,11 @@ if this_char > 130:
 
 Clone repository, installing virtual environment and dependencies:
 
-```
-git clone https://github.com/Pendosv/ImageCrypt.git
-cd ImageCrypt
+```bash
+git clone https://github.com/Pendosv/{project_path}.git
+cd {project_path}
 virtualenv venv
-venv\Scripts\activate.bat
+source venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
