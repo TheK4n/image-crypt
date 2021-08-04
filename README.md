@@ -65,10 +65,9 @@ Clone repository, installing virtual environment and dependencies:
 ```bash
 git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
-virtualenv venv
-source venv\Scripts\activate
 pip install -r requirements.txt
 chmod +x image-crypt
+sudo cp image-crypt /usr/bin
 ```
 
 <a id="chapter-2"></a>
@@ -86,14 +85,14 @@ python3 main.py
 
 For **encryption**: 
 ```
-./image-crypt --encrypt -p path_to_image -m "message" -k "key"
+image-crypt --encrypt -p path_to_image -m "message" -k "key"
 ```
 **Result**: saved image _image_encrypted.bmp_
 
 
 For **decryption**: 
 ```
-./image-crypt --decrypt -p path_to_image -k "key" > res.txt
+image-crypt --decrypt -p path_to_image -k "key" > res.txt
 ```
 **Result**: decrypted text
 

@@ -113,12 +113,13 @@ class CryptImage:
         return msg
 
 
-class CryptImage_save(CryptImage):
+class CryptImageSave(CryptImage):
 
     def __init__(self, image_name: str):
         self.image_name = image_name
 
-    def __make_dir(self):
+    @staticmethod
+    def __make_dir():
         try:
             mkdir('results')
         except FileExistsError:

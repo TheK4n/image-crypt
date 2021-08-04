@@ -41,7 +41,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
         try:
 
-            crt = CryptImage_save(self.image_directory_enc)
+            crt = CryptImageSave(self.image_directory_enc)
 
             crt.save_encrypted_image(self.text_input.toPlainText(), self.lineEdit.text())
 
@@ -73,7 +73,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
             error_dialog.exec_()
             return
 
-        crt = CryptImage_save(self.image_directory_dec)
+        crt = CryptImageSave(self.image_directory_dec)
 
         res = crt.get_msg_from_image(self.lineEdit_2.text())
         self.text_output.setText(res)
