@@ -24,7 +24,7 @@ class CryptImage:
     @staticmethod
     def _rgb_to_dec(rgb: tuple[int, int, int]) -> int:
         """Возвращает число, переводит RGB в десятичный формат"""
-        r, g, b = rgb
+        r, g, b = rgb[:4]
         return b * 65536 + g * 256 + r
 
     @staticmethod
@@ -193,7 +193,7 @@ def main(args):
             if not err_flag:
                 crt = CryptImageSave(image)
                 try:
-                    crt.save_encrypted_image_bash(getpass(prompt='Key: '))
+                    print(crt.get_msg_from_image(getpass(prompt='Key: ')))
                 except FileNotFoundError:
                     err_flag = True
                     err_message += f'{image} not found'
