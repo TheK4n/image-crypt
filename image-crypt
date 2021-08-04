@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+
+import sys
+from getpass import getpass
+
+from src.Crypto import *
+
+
+def encrypt(path, message, key):
+    crt = CryptImage_save(path)
+    crt.save_encrypted_image_bash(message, key)
+
+
+def decrypt(path, key):
+    crt = CryptImage_save(path)
+    return crt.get_msg_from_image(key)
+
+
+def main(args):
+    filename = args.pop(0)
+
+    if ('-h', '--help') in args:
+        print('usage:',
+              'ImageCrypt [-h] {--encrypt} <image> <message>',
+              'ImageCrypt [-h] {--decrypt} <image>',
+              '',
+              'positional arguments:',
+              '  image      path to image',
+              ' message     message to be encrypted',
+              sep='\n')
+        exit(0)
+
+    err_message = f'{filename}: error:\n'
+    err_flag = False
+
+    if not args:
+        err_flag = True
+        err_message += 'no arguments\n'
+    else:
+        method = args[0]
+
+        if method not in {'--encrypt', '--decrypt'}:
+            err_flag = True
+            err_message += f'unexpected arguments: {method}\n'
+
+        if method == '--encrypt':
+            try:
+                image = args[1]
+            except IndexError:
+                err_flag = True
+                err_message += '<image> argument are required\n'
+
+            try:
+                message = args[2]
+            except IndexError:
+                err_flag = True
+                err_message += '<message> argument are required\n'
+
+            if not err_flag:
+                try:
+                    encrypt(image, message, getpass(prompt='Key: '))
+                except FileNotFoundError:
+                    err_flag = True
+                    err_message += f'{image} not found'
+                except MoreThanImgError:
+                    err_flag = True
+                    err_message += f'Length of message <{len(message)}> more than image size'
+                else:
+                    print(f'Image saved')
+
+        elif method == '--decrypt':
+            try:
+                image = args[1]
+            except IndexError:
+                err_flag = True
+                err_message += '<image> argument are required\n'
+
+            if not err_flag:
+                try:
+                    print(decrypt(image, getpass(prompt='Key: ')))
+                except FileNotFoundError:
+                    err_flag = True
+                    err_message += f'{image} not found'
+
+    if err_flag:
+        print(err_message, file=sys.stderr)
+        exit(-1)
+
+
+if __name__ == '__main__':
+    main(sys.argv)

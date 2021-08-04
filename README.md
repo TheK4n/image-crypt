@@ -68,6 +68,7 @@ cd ImageCrypt
 virtualenv venv
 source venv\Scripts\activate
 pip install -r requirements.txt
+chmod +x image-crypt
 ```
 
 <a id="chapter-2"></a>
@@ -75,7 +76,7 @@ pip install -r requirements.txt
 
 ### GUI:
 ```
-python main.py
+python3 main.py
 ```
 [![Example](https://i.ibb.co/pvGxP0f/crypto.png)]()
 
@@ -85,14 +86,14 @@ python main.py
 
 For **encryption**: 
 ```
-python encrypt.py <image_name> <message> <key>
+./image-crypt --encrypt -p path_to_image -m "message" -k "key"
 ```
-**Result**: saved image _results\result.bmp_
+**Result**: saved image _image_encrypted.bmp_
 
 
 For **decryption**: 
 ```
-python decrypt.py <image_name> <key>
+./image-crypt --decrypt -p path_to_image -k "key" > res.txt
 ```
 **Result**: decrypted text
 

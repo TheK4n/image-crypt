@@ -117,21 +117,25 @@ class CryptImage_save(CryptImage):
 
     def __init__(self, image_name: str):
         self.image_name = image_name
-        self.__make_dir()
 
     def __make_dir(self):
         try:
-            mkdir('\\'.join(self.image_name.split('\\')[:-1]) + '\\results')
+            mkdir('results')
         except FileExistsError:
             pass
 
     def save_encrypted_image(self, msg: str, key: str):
-
+        self.__make_dir()
         # кол-во файлов в папке с расширением bmp
         n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
 
         # сохраняет зашифрованную картинку
-        self._encrypt(self.image_name, msg, key).save(f'results\\encrypted_{n + 1}.bmp', 'BMP')
+        self._encrypt(self.image_name, msg, key).save(f'encrypted_{n + 1}.bmp', 'BMP')
+
+    def save_encrypted_image_bash(self, msg, key):
+        img_name = '.'.join(self.image_name.split('/')[-1].split('.')[:-1])
+
+        self._encrypt(self.image_name, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
 
     def get_msg_from_image(self, key: str) -> str:
         return self._decrypt(self.image_name, key)
