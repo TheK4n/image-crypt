@@ -21,7 +21,7 @@ class CryptImage:
     @staticmethod
     def _rgb_to_dec(rgb: tuple[int, int, int]) -> int:
         """Возвращает число, переводит RGB в десятичный формат"""
-        r, g, b = rgb
+        r, g, b = rgb[:3]
         return b * 65536 + g * 256 + r
 
     @staticmethod
