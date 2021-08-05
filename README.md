@@ -85,7 +85,8 @@ python3 main.py
 
 For **encryption**: 
 ```
-image-crypt --encrypt path_to_image
+image-crypt --encrypt path_to_image [message]
+image-crypt -c path_to_image [message]
 ```
 **Result**: saved image _image_encrypted.bmp_
 
@@ -93,8 +94,16 @@ image-crypt --encrypt path_to_image
 For **decryption**: 
 ```
 image-crypt --decrypt path_to_image
+image-crypt -C path_to_image
 ```
 **Result**: decrypted text
+
+**Example:**
+```bash
+echo "test message" | image-crypt -c image.png
+
+image-crypt -C image_encrypted.bmp > res.txt
+```
 
 
 <p align="center">
