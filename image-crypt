@@ -163,14 +163,11 @@ def main(args):
                 err_flag = True
                 err_message += '<image> argument are required\n'
 
-            try:
-                message = args[2]
-            except IndexError:
-                err_flag = True
-                err_message += '<message> argument are required\n'
-
             if not err_flag:
                 crt = CryptImageSave(image)
+
+                message = getpass(prompt='Message: ')
+
                 try:
                     crt.save_encrypted_image_bash(message, getpass(prompt='Key: '))
                 except FileNotFoundError:
