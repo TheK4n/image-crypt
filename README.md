@@ -85,14 +85,14 @@ python3 main.py
 
 For **encryption**: 
 ```
-image-crypt --encrypt -p path_to_image -m "message" -k "key"
+image-crypt --encrypt path_to_image
 ```
 **Result**: saved image _image_encrypted.bmp_
 
 
 For **decryption**: 
 ```
-image-crypt --decrypt -p path_to_image -k "key" > res.txt
+image-crypt --decrypt path_to_image
 ```
 **Result**: decrypted text
 
