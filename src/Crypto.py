@@ -131,7 +131,7 @@ class CryptImageSave(CryptImage):
         n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
 
         # сохраняет зашифрованную картинку
-        self._encrypt(self.image_name, msg, key).save(f'encrypted_{n + 1}.bmp', 'BMP')
+        self._encrypt(self.image_name, msg, key).save(f'results/encrypted_{n + 1}.bmp', 'BMP')
 
     def save_encrypted_image_bash(self, msg, key):
         img_name = '.'.join(self.image_name.split('/')[-1].split('.')[:-1])
