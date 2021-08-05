@@ -2,7 +2,6 @@
 
 import sys
 from getpass import getpass
-from os import mkdir, listdir
 from random import seed, randint
 from PIL import Image, ImageDraw
 
@@ -181,7 +180,8 @@ def main(args):
                     err_flag = True
                     err_message += f'Length of message <{len(message)}> more than image size'
                 else:
-                    print(f'Image saved')
+                    image_name = '.'.join(image.split('/')[-1].split('.')[:-1]) + '_encrypted.bmp'
+                    print(f'Image saved as {image_name}')
 
         elif method == '--decrypt':
             try:
