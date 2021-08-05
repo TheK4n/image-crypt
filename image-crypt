@@ -165,8 +165,10 @@ def main(args):
 
             if not err_flag:
                 crt = CryptImageSave(image)
-
-                message = getpass(prompt='Message: ')
+                try:
+                    message = args[2]
+                except IndexError:
+                    message = sys.stdin.read()
 
                 try:
                     crt.save_encrypted_image_bash(message, getpass(prompt='Key: '))
