@@ -3,7 +3,7 @@
 import sys
 from getpass import getpass
 from random import seed, randint
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, UnidentifiedImageError
 
 
 class MoreThanImgError(Exception):
@@ -178,6 +178,9 @@ def main(args):
                 except MoreThanImgError:
                     err_flag = True
                     err_message += f'Length of message <{len(message)}> more than image size'
+                except UnidentifiedImageError:
+                    err_flag = True
+                    err_message += f'Not an image'
                 else:
                     image_name = '.'.join(image.split('/')[-1].split('.')[:-1]) + '_encrypted.bmp'
                     print(f'Image saved as {image_name}')
