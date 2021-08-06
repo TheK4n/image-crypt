@@ -134,8 +134,8 @@ def main(args):
 
     if ('-h', '--help') in args:
         print('usage:',
-              'ImageCrypt [-h] <--encrypt|-c> <image> [message]',
-              'ImageCrypt [-h] <--decrypt|-C> <image>',
+              'ImageCrypt [-h] <--encrypt|-e> <image> [message]',
+              'ImageCrypt [-h] <--decrypt|-d> <image>',
               '',
               'positional arguments:',
               '  image      path to image',
@@ -152,11 +152,11 @@ def main(args):
     else:
         method = args[0]
 
-        if method not in {'--encrypt', '--decrypt', '-c', '-C'}:
+        if method not in {'--encrypt', '--decrypt', '-e', '-d'}:
             err_flag = True
             err_message += f'unexpected arguments: {method}\n'
 
-        if method in ('--encrypt', '-c'):
+        if method in ('--encrypt', '-e'):
             try:
                 image = args[1]
             except IndexError:
@@ -185,7 +185,7 @@ def main(args):
                     image_name = '.'.join(image.split('/')[-1].split('.')[:-1]) + '_encrypted.bmp'
                     print(f'Image saved as {image_name}')
 
-        elif method in ('--decrypt', '-C'):
+        elif method in ('--decrypt', '-d'):
             try:
                 image = args[1]
             except IndexError:
