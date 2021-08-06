@@ -134,8 +134,8 @@ def main(args):
 
     if ('-h', '--help') in args:
         print('usage:',
-              'ImageCrypt [-h] [--encrypt|-c] <image> [message]',
-              'ImageCrypt [-h] [--decrypt|-C] <image>',
+              'ImageCrypt [-h] <--encrypt|-c> <image> [message]',
+              'ImageCrypt [-h] <--decrypt|-C> <image>',
               '',
               'positional arguments:',
               '  image      path to image',
