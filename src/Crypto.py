@@ -139,4 +139,4 @@ class CryptImageSave(CryptImage):
         self._encrypt(self.image_name, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
 
     def get_msg_from_image(self, key: str) -> str:
-        return self._decrypt(self.image_name, key)
+        return self._decrypt(self.image_name, key).strip()

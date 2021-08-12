@@ -65,9 +65,11 @@ Clone repository, installing dependencies:
 ```bash
 git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
+virtualenv venv
+source venv\Scripts\activate
 pip install -r requirements.txt
 chmod +x image-crypt
-sudo cp image-crypt /usr/bin
+sudo ln -s $PWD/image-crypt /usr/bin/image-crypt
 ```
 
 <a id="chapter-2"></a>
