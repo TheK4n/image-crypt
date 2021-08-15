@@ -1,4 +1,6 @@
 from os import mkdir, listdir
+import os.path
+from pathlib import Path
 from random import seed, randint
 
 from PIL import Image, ImageDraw
@@ -115,28 +117,36 @@ class CryptImage:
 
 class CryptImageSave(CryptImage):
 
-    def __init__(self, image_name: str):
-        self.image_name = image_name
+    __project_path = Path(__file__).parent.parent
+    __results_path = os.path.join(__project_path, 'results')
 
-    @staticmethod
-    def __make_dir():
+    def __init__(self, image_path: str):
+        self.__image_path = image_path
+
+    def __make_dir(self):
         try:
-            mkdir('results')
+            mkdir(self.__results_path)
         except FileExistsError:
             pass
+
+    @staticmethod
+    def _count_files_with_extension(path: str, extension: str):
+        return len(list(filter(lambda x: x.split('.')[-1] == extension, list(listdir(path)))))
 
     def save_encrypted_image(self, msg: str, key: str):
         self.__make_dir()
         # кол-во файлов в папке с расширением bmp
-        n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
+        n = self._count_files_with_extension(self.__results_path, 'bmp')
+
+        img_name = os.path.join(self.__results_path, f'encrypted_{n + 1}.bmp')
 
         # сохраняет зашифрованную картинку
-        self._encrypt(self.image_name, msg, key).save(f'results/encrypted_{n + 1}.bmp', 'BMP')
+        self._encrypt(self.__image_path, msg, key).save(img_name, 'BMP')
 
     def save_encrypted_image_bash(self, msg, key):
-        img_name = '.'.join(self.image_name.split('/')[-1].split('.')[:-1])
+        img_name = '.'.join(os.path.basename(self.__image_path).split('.')[:-1])
 
-        self._encrypt(self.image_name, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
+        self._encrypt(self.__image_path, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
 
     def get_msg_from_image(self, key: str) -> str:
-        return self._decrypt(self.image_name, key).strip()
+        return self._decrypt(self.__image_path, key).strip()

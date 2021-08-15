@@ -45,8 +45,8 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
             crt.save_encrypted_image(self.text_input.toPlainText(), self.lineEdit.text())
 
-            n = len(list(filter(lambda x: x.split('.')[-1] == 'bmp', list(listdir('results')))))
-            self.Debug_area_1.setText(f'Encrypted image saved as encrypted_{n}.bmp')
+            self.Debug_area_1.setText(f'Encrypted image saved')
+
         except MoreThanImgError:
             error_dialog = QMessageBox()
             error_dialog.setIcon(QMessageBox.Critical)
