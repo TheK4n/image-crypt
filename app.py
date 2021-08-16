@@ -1,10 +1,13 @@
 import sys
+from pathlib import Path
+import os.path
 
 from PyQt5 import QtGui
 
-from src.Crypto import *
+from src.Crypto import MoreThanImgError, CryptImageSave
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from src import design
+
 
 project_path = Path(__file__).parent
 

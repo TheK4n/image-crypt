@@ -4,6 +4,7 @@ import sys
 from getpass import getpass
 from PIL import UnidentifiedImageError
 from src.Crypto import CryptImageSave, MoreThanImgError
+import os.path
 
 
 def main(args):
@@ -59,7 +60,7 @@ def main(args):
                     err_flag = True
                     err_message += f'{image} not an image'
                 else:
-                    image_name = '.'.join(image.split('/')[-1].split('.')[:-1]) + '_encrypted.bmp'
+                    image_name = '.'.join(os.path.basename(image).split('.')[:-1]) + '_encrypted.bmp'
                     print(f'Image saved as {image_name}')
 
         elif method in ('--decrypt', '-d'):
