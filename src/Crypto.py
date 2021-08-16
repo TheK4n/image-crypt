@@ -119,16 +119,20 @@ class CryptImageSave(CryptImage):
         self.__image_path = image_path
 
     @staticmethod
-    def _get_filename_without_extension(filename: str):
+    def _get_filename_without_extension(filename: str) -> str:
         return '.'.join(os.path.basename(filename).split('.')[:-1])
 
     def save_encrypted_image_gui(self, msg: str, key: str):
         encrypted_image_path = os.path.join(os.path.dirname(self.__image_path),
                                             f'{self._get_filename_without_extension(self.__image_path)}_encrypted.bmp')
+
+        # saves encrypted image in source image directory
         self._encrypt(self.__image_path, msg, key).save(encrypted_image_path, 'BMP')
 
     def save_encrypted_image_bash(self, msg, key):
         img_name = self._get_filename_without_extension(self.__image_path)
+
+        # saves encrypted image in work directory
         self._encrypt(self.__image_path, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
 
     def get_msg_from_image(self, key: str) -> str:
