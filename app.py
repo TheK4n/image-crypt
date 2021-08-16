@@ -48,7 +48,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
 
             crt = CryptImageSave(self.image_directory_enc)
 
-            crt.save_encrypted_image(self.text_input.toPlainText(), self.lineEdit.text())
+            crt.save_encrypted_image_gui(self.text_input.toPlainText(), self.lineEdit.text())
 
             self.Debug_area_1.setText(f'Encrypted image saved')
 
@@ -84,7 +84,7 @@ class MainWindow(QMainWindow, design.Ui_MainWindow):
         self.text_output.setText(res)
 
         if self.checkBox.isChecked():
-            with open(os.path.join(project_path, 'results', 'res.txt'), 'w') as file:
+            with open(os.path.join(os.path.dirname(self.image_directory_dec), 'res.txt'), 'w') as file:
                 file.write(res)
             self.Debug_area_2.setText('Successfully decrypted image, saved to res.txt')
         else:
