@@ -20,9 +20,10 @@
 ## Project description 
 
 [Project](https://github.com/AlexGyver/crypto) [AlexGyver](https://github.com/AlexGyver) on Python by [Pend0s](https://github.com/Pendosv)
-
+\
 _Design by [Пашушка](https://github.com/PAPASKAS)_
 
+\
 Byte packing in decimal rgb:
 ```python
 this_color = b * 65536 + g * 256 + r
@@ -46,6 +47,7 @@ this_char |= (new_color & 0x300) >> 5     # 00000000 00000011 00000000 -> 000000
 this_char |= (new_color & 0x7)
 ```
 
+\
 Method for russian symbols:
 ```python
 # Encryption
@@ -105,6 +107,7 @@ optional arguments:
                         name of output image
 ```
 
+\
 For **encryption**: 
 ```bash
 image-crypt (-e|--encrypt) path_to_image [-o|--output new_name]
@@ -118,6 +121,7 @@ image-crypt (-e|--decrypt) path_to_image
 ```
 **Result**: decrypted text
 
+\
 **Example:**
 ```bash
 echo "test message" | image-crypt -e image.png -o test_image.bmp
