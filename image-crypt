@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description='Stenography encryption tool')
 parser.add_argument(dest='images', nargs='+',
                     help='path to image to encrypt of decrypt')
 
-group = parser.add_mutually_exclusive_group()
+group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('-e', '--encrypt', dest='encrypt', action='store_true',
                    help='encrypts text in image')
 
