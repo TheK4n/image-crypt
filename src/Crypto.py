@@ -4,6 +4,9 @@ from random import seed, randint
 from PIL import Image, ImageDraw
 
 
+__all__ = ['CryptImageSave', 'MoreThanImgError']
+
+
 class MoreThanImgError(Exception):
     pass
 
@@ -129,11 +132,14 @@ class CryptImageSave(CryptImage):
         # saves encrypted image in source image directory
         self._encrypt(self.__image_path, msg, key).save(encrypted_image_path, 'BMP')
 
-    def save_encrypted_image_bash(self, msg, key):
-        img_name = self._get_filename_without_extension(self.__image_path)
+    def save_encrypted_image_bash(self, msg, key, new_name=None):
+
+        if new_name is None:
+            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.bmp'
 
         # saves encrypted image in work directory
-        self._encrypt(self.__image_path, msg, key).save(f'{img_name}_encrypted.bmp', 'BMP')
+        self._encrypt(self.__image_path, msg, key).save(new_name, 'BMP')
+        return new_name
 
     def get_msg_from_image(self, key: str) -> str:
         return self._decrypt(self.__image_path, key).strip()

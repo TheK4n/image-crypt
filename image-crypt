@@ -1,90 +1,78 @@
 #!/usr/bin/env python3
-
-import sys
+import argparse
+from sys import stderr, stdin
 from getpass import getpass
 from PIL import UnidentifiedImageError
-from src.Crypto import CryptImageSave, MoreThanImgError
-import os.path
+from src.Crypto import *
 
 
-def main(args):
-    filename = args.pop(0)
+argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description='Stenography encryption tool')
 
-    if ('-h', '--help') in args:
-        print('usage:',
-              'ImageCrypt [-h] <--encrypt|-e> <image> [message]',
-              'ImageCrypt [-h] <--decrypt|-d> <image>',
-              '',
-              'positional arguments:',
-              '  image      path to image',
-              ' message     message to be encrypted  not required',
-              sep='\n')
-        exit(0)
+parser.add_argument(dest='images', nargs='+',
+                    help='path to image to encrypt of decrypt')
 
-    err_message = f'{filename}: error:\n'
-    err_flag = False
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-e', '--encrypt', dest='encrypt', action='store_true',
+                   help='encrypts text in image')
 
-    if not args:
-        err_flag = True
-        err_message += 'no arguments\n'
+group.add_argument("-d", "--decrypt", dest='decrypt', action="store_true",
+                   help='decrypts text from image')
+
+parser.add_argument('-o', '--output', dest='output', action='store', default=None,
+                    help='name of output image')
+
+args = parser.parse_args()
+
+
+def encrypt(image, message, key):
+
+    crt = CryptImageSave(image)
+
+    try:
+        new_name = crt.save_encrypted_image_bash(message, key, new_name=args.output)
+    except FileNotFoundError:
+        print(f'{image} not found', file=stderr)
+        return
+    except MoreThanImgError:
+        print(f'Length of message <{len(message)}> more than image size', file=stderr)
+        return
+    except UnidentifiedImageError:
+        print(f'{image} not an image', file=stderr)
+        return
     else:
-        method = args[0]
+        print(f'\nImage saved as {new_name}')
+        return
 
-        if method not in {'--encrypt', '--decrypt', '-e', '-d'}:
-            err_flag = True
-            err_message += f'unexpected arguments: {method}\n'
 
-        if method in ('--encrypt', '-e'):
-            try:
-                image = args[1]
-            except IndexError:
-                err_flag = True
-                err_message += '<image> argument are required\n'
+def decrypt(image, key):
 
-            if not err_flag:
-                crt = CryptImageSave(image)
-                try:
-                    message = args[2]
-                except IndexError:
-                    message = sys.stdin.read()
+    crt = CryptImageSave(image)
 
-                try:
-                    crt.save_encrypted_image_bash(message, getpass(prompt='Key: '))
-                except FileNotFoundError:
-                    err_flag = True
-                    err_message += f'{image} not found'
-                except MoreThanImgError:
-                    err_flag = True
-                    err_message += f'Length of message <{len(message)}> more than image size'
-                except UnidentifiedImageError:
-                    err_flag = True
-                    err_message += f'{image} not an image'
-                else:
-                    image_name = '.'.join(os.path.basename(image).split('.')[:-1]) + '_encrypted.bmp'
-                    print(f'Image saved as {image_name}')
+    try:
+        print(crt.get_msg_from_image(key))
+    except FileNotFoundError:
+        print(f'{image} not found')
+        return
+    except UnidentifiedImageError:
+        print(f'{image} not an image', file=stderr)
+        return
 
-        elif method in ('--decrypt', '-d'):
-            try:
-                image = args[1]
-            except IndexError:
-                err_flag = True
-                err_message += '<image> argument are required\n'
 
-            if not err_flag:
-                crt = CryptImageSave(image)
-                try:
-                    print(crt.get_msg_from_image(getpass(prompt='Key: ')))
-                except FileNotFoundError:
-                    err_flag = True
-                    err_message += f'{image} not found'
+def main():
+    if args.encrypt:
+        print('Input text: ')
+        message = stdin.read()
 
-    if err_flag:
-        print(err_message, file=sys.stderr)
-        exit(-1)
+    for image in args.images:
+        if args.encrypt:
+            encrypt(image, message, getpass(prompt='\nKey: '))
+        elif args.decrypt:
+            decrypt(image, getpass(prompt='Key: '))
 
 
 if __name__ == '__main__':
     try:
-        main(sys.argv)
+        main()
     except KeyboardInterrupt:
-        exit(-1)
+        exit(1)

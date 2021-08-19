@@ -86,15 +86,15 @@ python3 main.py
 ### Console:
 
 For **encryption**: 
+```bash
+image-crypt --encrypt path_to_image [-o|--output new_name]
+image-crypt -e path_to_image [-o|--output new_name]
 ```
-image-crypt --encrypt path_to_image [message]
-image-crypt -e path_to_image [message]
-```
-**Result**: saved image _image_encrypted.bmp_
+**Result**: saved image with default name _image_encrypted.bmp_
 
 
 For **decryption**: 
-```
+```bash
 image-crypt --decrypt path_to_image
 image-crypt -d path_to_image
 ```
@@ -102,9 +102,9 @@ image-crypt -d path_to_image
 
 **Example:**
 ```bash
-echo "test message" | image-crypt -e image.png
+echo "test message" | image-crypt -e image.png -o test_image.bmp
 
-image-crypt -d image_encrypted.bmp > res.txt
+image-crypt -d test_image.bmp > res.txt
 ```
 
 
