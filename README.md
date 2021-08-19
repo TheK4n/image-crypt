@@ -83,20 +83,38 @@ python3 main.py
 
 
 
-### Console:
+### Bash:
+
+```bash
+image-crypt --help
+```
+**Result**:
+```text
+usage: image-crypt [-h] (-e | -d) [-o OUTPUT] images [images ...]
+
+Stenography encryption tool
+
+positional arguments:
+  images                path to image to encrypt of decrypt
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e, --encrypt         encrypts text in image
+  -d, --decrypt         decrypts text from image
+  -o OUTPUT, --output OUTPUT
+                        name of output image
+```
 
 For **encryption**: 
 ```bash
-image-crypt --encrypt path_to_image [-o|--output new_name]
-image-crypt -e path_to_image [-o|--output new_name]
+image-crypt (-e|--encrypt) path_to_image [-o|--output new_name]
 ```
 **Result**: saved image with default name _image_encrypted.bmp_
 
 
 For **decryption**: 
 ```bash
-image-crypt --decrypt path_to_image
-image-crypt -d path_to_image
+image-crypt (-e|--decrypt) path_to_image
 ```
 **Result**: decrypted text
 
