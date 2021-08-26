@@ -143,3 +143,20 @@ class CryptImageSave(CryptImage):
 
     def get_msg_from_image(self, key: str) -> str:
         return self._decrypt(self.__image_path, key).strip()
+
+
+def main():
+    import cProfile
+    import pstats
+
+    with cProfile.Profile() as pr:
+        crc = CryptImageSave('')
+        crc._encrypt('../images/test4k.jpg', 'message', 'key').save('res.bmp', 'BMP')
+
+    stats = pstats.Stats(pr)
+    stats.sort_stats(pstats.SortKey.TIME)
+    stats.print_stats()
+
+
+if __name__ == '__main__':
+    main()

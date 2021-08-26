@@ -117,7 +117,7 @@ image-crypt (-e|--encrypt) path_to_image [-o|--output new_name]
 
 For **decryption**: 
 ```bash
-image-crypt (-e|--decrypt) path_to_image
+image-crypt (-d|--decrypt) path_to_image
 ```
 **Result**: decrypted text
 

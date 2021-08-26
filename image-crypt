@@ -40,6 +40,9 @@ def encrypt(image, message, key):
     except UnidentifiedImageError:
         print(f'{image} not an image', file=stderr)
         return
+    except PermissionError:
+        print(f'Permission denied', file=stderr)
+        return
     else:
         print(f'\nImage saved as {new_name}')
         return
@@ -50,13 +53,18 @@ def decrypt(image, key):
     crt = CryptImageSave(image)
 
     try:
-        print(crt.get_msg_from_image(key))
+        res = crt.get_msg_from_image(key)
     except FileNotFoundError:
         print(f'{image} not found')
         return
     except UnidentifiedImageError:
         print(f'{image} not an image', file=stderr)
         return
+    except PermissionError:
+        print(f'Permission denied', file=stderr)
+        return
+    else:
+        print(res)
 
 
 def main():
