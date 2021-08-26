@@ -69,7 +69,7 @@ git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
 virtualenv venv
 source venv\Scripts\activate
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 chmod +x image-crypt
 sudo ln -s $PWD/image-crypt /usr/bin/image-crypt
 ```
