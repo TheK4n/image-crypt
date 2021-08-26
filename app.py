@@ -14,11 +14,11 @@ from src import design
 project_path = Path(__file__).parent
 
 
-class MainWindow(QMainWindow, design.Ui_MainWindow):
+class MainWindow(QMainWindow, design.UiMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setupUi(self)
+        self.setup_ui(self)
 
         self.image_directory_dec = None
         self.image_directory_enc = None
