@@ -81,7 +81,7 @@ sudo ln -s $PWD/image-crypt /usr/bin/image-crypt
 ```
 python3 main.py
 ```
-[![Example](https://i.ibb.co/pvGxP0f/crypto.png)]()
+[![Example](src/preview.png)]()
 
 
 
