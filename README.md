@@ -110,14 +110,14 @@ optional arguments:
 \
 For **encryption**: 
 ```bash
-image-crypt (-e|--encrypt) path_to_image [-o|--output new_name]
+image-crypt -e images/test.jpg
 ```
 **Result**: saved image with default name _image_encrypted.bmp_
 
 
 For **decryption**: 
 ```bash
-image-crypt (-d|--decrypt) path_to_image
+image-crypt -d test_encrypted.bmp
 ```
 **Result**: decrypted text
 
