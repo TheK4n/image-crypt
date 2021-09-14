@@ -129,4 +129,4 @@ echo "test message" | image-crypt -e image.png -o test_image.bmp
 image-crypt -d test_image.bmp > res.txt
 ```
 
-<a href="#top">Back to top</a>
+# [↑](#top)
