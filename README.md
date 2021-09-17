@@ -69,7 +69,7 @@ git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
 python3 -m pip install -r requirements.txt
 chmod +x image-crypt
-sudo ln -s $PWD/image-crypt ~/bin/image-crypt
+ln -s $PWD/image-crypt ~/bin/image-crypt
 ```
 
 <a id="chapter-2"></a>
