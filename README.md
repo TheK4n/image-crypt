@@ -67,8 +67,6 @@ Clone repository, install virtual environment and installing dependencies:
 ```bash
 git clone https://github.com/Pendosv/ImageCrypt.git
 cd ImageCrypt
-virtualenv venv
-source venv\Scripts\activate
 python3 -m pip install -r requirements.txt
 chmod +x image-crypt
 sudo ln -s $PWD/image-crypt ~/bin/image-crypt
