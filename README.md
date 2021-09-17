@@ -71,7 +71,7 @@ virtualenv venv
 source venv\Scripts\activate
 python3 -m pip install -r requirements.txt
 chmod +x image-crypt
-sudo ln -s $PWD/image-crypt /usr/bin/image-crypt
+sudo ln -s $PWD/image-crypt ~/bin/image-crypt
 ```
 
 <a id="chapter-2"></a>
