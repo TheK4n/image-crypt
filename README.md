@@ -62,7 +62,7 @@ if this_char > 130:
 <a id="chapter-1"></a>
 ## Installation:
 
-Clone repository, install virtual environment and installing dependencies:
+Clone repository and installing dependencies:
 
 ```bash
 git clone https://github.com/Pendosv/ImageCrypt.git
