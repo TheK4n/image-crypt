@@ -4,10 +4,10 @@
 
 <p align="center">
   <a href="https://github.com/Pendosv">
-    <img src="https://img.shields.io/github/followers/Pendosv?label=Follow&style=social">
+    <img src="https://img.shields.io/github/followers/TheK4n?label=Follow&style=social">
   </a>
   <a href="https://github.com/Pendosv/ImageCrypt">
-    <img src="https://img.shields.io/github/stars/Pendosv/ImageCrypt?style=social">
+    <img src="https://img.shields.io/github/stars/TheK4n/ImageCrypt?style=social">
   </a>
 </p>
 
@@ -19,7 +19,7 @@
 <a id="chapter-0"></a>
 ## Project description 
 
-[Project](https://github.com/AlexGyver/crypto) [AlexGyver](https://github.com/AlexGyver) on Python by [Pend0s](https://github.com/Pendosv)
+[Project](https://github.com/AlexGyver/crypto) [AlexGyver](https://github.com/AlexGyver) on Python by [TheK4n](https://github.com/TheK4n)
 \
 _Design by [Пашушка](https://github.com/PAPASKAS)_
 
@@ -65,7 +65,7 @@ if this_char > 130:
 Clone repository and installing dependencies:
 
 ```bash
-git clone https://github.com/Pendosv/ImageCrypt.git
+git clone https://github.com/TheK4n/ImageCrypt.git
 cd ImageCrypt
 python3 -m pip install -r requirements.txt
 chmod +x image-crypt
