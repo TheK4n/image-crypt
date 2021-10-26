@@ -3,10 +3,10 @@
 <h1 align="center">ImageCrypt</h1>
 
 <p align="center">
-  <a href="https://github.com/Pendosv">
+  <a href="https://github.com/TheK4n">
     <img src="https://img.shields.io/github/followers/TheK4n?label=Follow&style=social">
   </a>
-  <a href="https://github.com/Pendosv/ImageCrypt">
+  <a href="https://github.com/TheK4n/ImageCrypt">
     <img src="https://img.shields.io/github/stars/TheK4n/ImageCrypt?style=social">
   </a>
 </p>
