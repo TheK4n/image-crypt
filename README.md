@@ -77,7 +77,7 @@ ln -s $PWD/image-crypt ~/bin/image-crypt
 
 ### GUI:
 ```
-python3 main.py
+./app.py
 ```
 [![Example](src/preview.png)]()
 
