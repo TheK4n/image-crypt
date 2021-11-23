@@ -67,9 +67,7 @@ Clone repository and installing dependencies:
 ```bash
 git clone https://github.com/TheK4n/ImageCrypt.git
 cd ImageCrypt
-python3 -m pip install -r requirements.txt
-chmod +x image-crypt
-ln -s $PWD/image-crypt ~/bin/image-crypt
+make
 ```
 
 <a id="chapter-2"></a>
