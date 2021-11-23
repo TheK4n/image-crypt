@@ -75,7 +75,7 @@ make
 
 ### GUI:
 ```
-./app.py
+image-crypt-gui
 ```
 [![Example](src/preview.png)]()
 
