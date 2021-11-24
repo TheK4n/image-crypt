@@ -15,4 +15,4 @@ uninstall:
 	rm $(PREFIX)/$(SCGNAME)
 
 clean:
-	rm -rf images .github .git .gitignore LICENSE README.md src/preview.png
+	rm -rf images .github .git .gitignore LICENSE README.md src/preview.png src/mainwindow.ui
