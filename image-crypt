@@ -3,7 +3,7 @@ import argparse
 from sys import stderr, stdin
 from getpass import getpass
 from PIL import UnidentifiedImageError
-from src.Crypto import *
+from src.crypto_image import *
 
 
 argparse.ArgumentParser()
@@ -62,6 +62,9 @@ def decrypt(image, key):
         return
     except PermissionError:
         print(f'Permission denied', file=stderr)
+        return
+    except ValueError:
+        print("Wrong passphrase!", file=stderr)
         return
     else:
         print(res)

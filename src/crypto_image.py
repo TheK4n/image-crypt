@@ -1,8 +1,11 @@
 import os.path
 from random import seed, randint
-
+from hashlib import sha512, scrypt
 from PIL import Image, ImageDraw
-
+from base64 import b64encode, b64decode
+from Cryptodome.Cipher import AES
+from Cryptodome.Random import get_random_bytes
+import os
 
 __all__ = ['CryptImageSave', 'MoreThanImgError']
 
@@ -55,7 +58,46 @@ class CryptImage:
 
         return chr(this_char)
 
+    @staticmethod
+    def __get_sha512(passwd: str) -> str:
+        return sha512(passwd.encode()).hexdigest()
+
+    @staticmethod
+    def __get_encrypted_text_aes(text: str, key: str) -> str:
+        salt = get_random_bytes(AES.block_size)
+
+        private_key = scrypt(
+            key.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
+
+        cipher_config = AES.new(private_key, AES.MODE_GCM)
+
+        cipher_text, tag = cipher_config.encrypt_and_digest(text.encode('utf-8'))
+
+        return f"{b64encode(salt).decode('utf-8')}" \
+               f"{b64encode(cipher_config.nonce).decode('utf-8')}" \
+               f"{b64encode(tag).decode('utf-8')}" \
+               f"{b64encode(cipher_text).decode('utf-8')}"
+
+    @staticmethod
+    def __parse_hash(encrypted_text: str, block_size=24) -> tuple:
+
+        return tuple(map(b64decode, (encrypted_text[:block_size], encrypted_text[block_size:block_size * 2],
+                                     encrypted_text[block_size * 2:block_size * 3], encrypted_text[block_size * 3:])))
+
+    def __get_decrypted_text_aes(self, hashed_text: str, key: str) -> str:
+        salt, nonce, tag, cipher_text = self.__parse_hash(hashed_text)
+
+        private_key = scrypt(
+            key.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
+
+        cipher = AES.new(private_key, AES.MODE_GCM, nonce=nonce)
+
+        return cipher.decrypt_and_verify(cipher_text, tag).decode('utf-8')
+
     def _encrypt(self, image_name: str, msg: str, key: str) -> Image:
+
+        msg = self.__get_encrypted_text_aes(msg, key)
+
         msg += '\0'  # добавляет в конец сообщения как метку
 
         img = Image.open(image_name)
@@ -67,9 +109,8 @@ class CryptImage:
             raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
 
         checked = []
-
         gen_msg = (i for i in msg)  # генератор
-        seed(key)
+        seed(self.__get_sha512(key))
         n = 0  # счетчик
         for i in self.__gen_coords(img.size):
 
@@ -92,12 +133,13 @@ class CryptImage:
         return img
 
     def _decrypt(self, image_name: str, key: str) -> str:
+
         img = Image.open(image_name)
         pix = img.load()
 
         checked = []
         msg = ''
-        seed(key)
+        seed(self.__get_sha512(key))
         n = 0
         for i in self.__gen_coords(img.size):
             if n >= img.size[0] * img.size[1]:
@@ -113,7 +155,7 @@ class CryptImage:
                 msg += char
 
         seed()  # возвращает зерно рандомизатора в None
-        return msg
+        return self.__get_decrypted_text_aes(msg, key)
 
 
 class CryptImageSave(CryptImage):
