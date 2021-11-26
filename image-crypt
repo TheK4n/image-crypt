@@ -63,6 +63,9 @@ def decrypt(image, key):
     except PermissionError:
         print(f'Permission denied', file=stderr)
         return
+    except ValueError:
+        print("Wrong passphrase!", file=stderr)
+        return
     else:
         print(res)
 

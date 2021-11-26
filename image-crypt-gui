@@ -81,8 +81,11 @@ class MainWindow(QMainWindow, design.UiMainWindow):
             return
 
         crt = CryptImageSave(self.image_directory_dec)
-
-        res = crt.get_msg_from_image(self.lineEdit_2.text())
+        try:
+            res = crt.get_msg_from_image(self.lineEdit_2.text())
+        except ValueError:
+            self.Debug_area_2.setText('Wrong passphrase')
+            return
         self.text_output.setText(res)
 
         if self.checkBox.isChecked():

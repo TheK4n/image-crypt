@@ -4,8 +4,8 @@ from hashlib import sha512, scrypt
 from PIL import Image, ImageDraw
 from base64 import b64encode, b64decode
 from Cryptodome.Cipher import AES
-import os
 from Cryptodome.Random import get_random_bytes
+import os
 
 __all__ = ['CryptImageSave', 'MoreThanImgError']
 
@@ -97,7 +97,6 @@ class CryptImage:
     def _encrypt(self, image_name: str, msg: str, key: str) -> Image:
 
         msg = self.__get_encrypted_text_aes(msg, key)
-
 
         msg += '\0'  # добавляет в конец сообщения как метку
 
