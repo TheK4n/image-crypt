@@ -3,7 +3,7 @@ import argparse
 from sys import stderr, stdin
 from getpass import getpass
 from PIL import UnidentifiedImageError
-from src.Crypto import *
+from src.crypto_image import *
 
 
 argparse.ArgumentParser()
