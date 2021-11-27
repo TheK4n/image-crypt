@@ -73,10 +73,7 @@ class CryptImage:
 
         cipher_text, tag = cipher_config.encrypt_and_digest(text.encode('utf-8'))
 
-        return f"{b64encode(salt).decode('utf-8')}" \
-               f"{b64encode(cipher_config.nonce).decode('utf-8')}" \
-               f"{b64encode(tag).decode('utf-8')}" \
-               f"{b64encode(cipher_text).decode('utf-8')}"
+        return "".join(map(lambda x: b64encode(x).decode("utf-8"), (salt, cipher_config.nonce, tag, cipher_text)))
 
     @staticmethod
     def __parse_hash(encrypted_text: str, block_size=24) -> tuple:
