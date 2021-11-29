@@ -14,24 +14,17 @@ class MoreThanImgError(Exception):
     pass
 
 
-class CryptImage:
+def get_sha512(passwd: str) -> str:
+    return sha512(passwd.encode()).hexdigest()
+
+
+class Pixel:
+
+    def __init__(self, color: (int, int, int)):
+        self.__color = color
 
     @staticmethod
-    def __gen_coords(size: tuple[int, int]):
-        width, height = size
-        width -= 1
-        height -= 1
-        while True:
-            yield randint(0, width), randint(0, height)
-
-    @staticmethod
-    def _rgb_to_dec(rgb: tuple[int, int, int]) -> int:
-        """Возвращает число, переводит RGB в десятичный формат"""
-        r, g, b = rgb[:3]
-        return b * 65536 + g * 256 + r
-
-    @staticmethod
-    def _get_encrypted_color(this_color: int, char: str) -> int:
+    def __get_encrypted_color(this_color: int, char: str) -> int:
         this_char = ord(char)
         if this_char > 1000:
             this_char -= 890
@@ -47,7 +40,7 @@ class CryptImage:
         return new_color
 
     @staticmethod
-    def _get_decrypted_char(new_color: int) -> str:
+    def __get_decrypted_char(new_color: int) -> str:
         this_char = 0
         this_char |= (new_color & 0x70000) >> 11  # 00000111 00000000 00000000 -> 00000000 00000000 11100000
         this_char |= (new_color & 0x300) >> 5  # 00000000 00000011 00000000 -> 00000000 00000000 00011000
@@ -58,58 +51,80 @@ class CryptImage:
 
         return chr(this_char)
 
-    @staticmethod
-    def __get_sha512(passwd: str) -> str:
-        return sha512(passwd.encode()).hexdigest()
+    def __rgb_to_dec(self):
+        """Возвращает число, переводит RGB в десятичный формат"""
+        r, g, b = self.__color[:3]
+        return b * 65536 + g * 256 + r
 
-    @staticmethod
-    def __get_encrypted_text_aes(text: str, key: str) -> str:
+    def encrypt(self, char: str):
+        return self.__get_encrypted_color(self.__rgb_to_dec(), char)
+
+    def decrypt(self):
+        return self.__get_decrypted_char(self.__rgb_to_dec())
+
+
+class Text:
+    def __init__(self, text: str):
+        self.__text = text
+
+    def __parse_hash(self, block_size=24) -> tuple:
+
+        return tuple(map(b64decode, (self.__text[:block_size], self.__text[block_size:block_size * 2],
+                                     self.__text[block_size * 2:block_size * 3], self.__text[block_size * 3:])))
+
+    def encrypt(self, key: str):
         salt = get_random_bytes(AES.block_size)
-
         private_key = scrypt(
             key.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
-
         cipher_config = AES.new(private_key, AES.MODE_GCM)
+        cipher_text, tag = cipher_config.encrypt_and_digest(self.__text.encode('utf-8'))
+        self.__text = "".join(map(lambda x: b64encode(x).decode("utf-8"), (salt, cipher_config.nonce, tag, cipher_text)))
+        return self
 
-        cipher_text, tag = cipher_config.encrypt_and_digest(text.encode('utf-8'))
-
-        return "".join(map(lambda x: b64encode(x).decode("utf-8"), (salt, cipher_config.nonce, tag, cipher_text)))
-
-    @staticmethod
-    def __parse_hash(encrypted_text: str, block_size=24) -> tuple:
-
-        return tuple(map(b64decode, (encrypted_text[:block_size], encrypted_text[block_size:block_size * 2],
-                                     encrypted_text[block_size * 2:block_size * 3], encrypted_text[block_size * 3:])))
-
-    def __get_decrypted_text_aes(self, hashed_text: str, key: str) -> str:
-        salt, nonce, tag, cipher_text = self.__parse_hash(hashed_text)
-
+    def decrypt(self, key: str):
+        salt, nonce, tag, cipher_text = self.__parse_hash()
         private_key = scrypt(
             key.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
-
         cipher = AES.new(private_key, AES.MODE_GCM, nonce=nonce)
+        self.__text = cipher.decrypt_and_verify(cipher_text, tag).decode('utf-8')
+        return self
 
-        return cipher.decrypt_and_verify(cipher_text, tag).decode('utf-8')
+    def get(self) -> str:
+        return self.__text
 
-    def _encrypt(self, image_name: str, msg: str, key: str) -> Image:
 
-        msg = self.__get_encrypted_text_aes(msg, key)
+class ImageBase:
+    def __init__(self, image_path: str):
+        self.__image_path = image_path
 
-        msg += '\0'  # добавляет в конец сообщения как метку
+        self.__img = Image.open(self.__image_path)
+        self.__size = self.get_size()
+        self.__pix = self.__img.load()  # пиксели
 
-        img = Image.open(image_name)
-        pix = img.load()  # пиксели
-        img_new = ImageDraw.Draw(img)
+    def get_size(self):
+        return self.__img.size[0] * self.__img.size[1]
 
-        size = img.size[0] * img.size[1]
-        if len(msg) > size:
-            raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{size}>')
+    def __gen_coords(self):
+        width, height = self.__img.size
+        width -= 1
+        height -= 1
+        while True:
+            yield randint(0, width), randint(0, height)
+
+    def encrypt(self, message: Text, key: str) -> Image:
+        msg = message.encrypt(key).get()
+        msg += '\0'
+
+        if len(msg) > self.__size:
+            raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{self.__size}>')
+
+        img_new = ImageDraw.Draw(self.__img)
 
         checked = []
         gen_msg = (i for i in msg)  # генератор
-        seed(self.__get_sha512(key))
+        seed(get_sha512(key))
         n = 0  # счетчик
-        for i in self.__gen_coords(img.size):
+        for i in self.__gen_coords():
 
             if n >= len(msg):  # если кол-во записанных больше или равно длине сообщения - конец цикла
                 break
@@ -121,27 +136,25 @@ class CryptImage:
                 except StopIteration:
                     break
 
-                # рисует зашифрованный пиксель
-                img_new.point(i, self._get_encrypted_color(self._rgb_to_dec(pix[i]), char))
+                p = Pixel(self.__pix[i])
+                img_new.point(i, p.encrypt(char))
                 n += 1
                 checked.append(i)
 
         seed()  # возвращает зерно рандомизатора в None
-        return img
+        return self.__img
 
-    def _decrypt(self, image_name: str, key: str) -> str:
-
-        img = Image.open(image_name)
-        pix = img.load()
+    def decrypt(self, key: str) -> str:
 
         checked = []
         msg = ''
-        seed(self.__get_sha512(key))
+        seed(get_sha512(key))
         n = 0
-        for i in self.__gen_coords(img.size):
-            if n >= img.size[0] * img.size[1]:
+        for i in self.__gen_coords():
+            if n >= self.__size:
                 break
-            char = self._get_decrypted_char(self._rgb_to_dec(pix[i]))
+            p = Pixel(self.__pix[i])
+            char = p.decrypt()
             n += 1
             if char == '\0':  # завершает цикл когда дошел до метки
                 break
@@ -152,10 +165,11 @@ class CryptImage:
                 msg += char
 
         seed()  # возвращает зерно рандомизатора в None
-        return self.__get_decrypted_text_aes(msg, key)
+        t = Text(msg)
+        return t.decrypt(key).get().strip()
 
 
-class CryptImageSave(CryptImage):
+class CryptImageSave:
 
     def __init__(self, image_path: str):
         self.__image_path = image_path
@@ -169,7 +183,9 @@ class CryptImageSave(CryptImage):
                                             f'{self._get_filename_without_extension(self.__image_path)}_encrypted.bmp')
 
         # saves encrypted image in source image directory
-        self._encrypt(self.__image_path, msg, key).save(encrypted_image_path, 'BMP')
+
+        img = ImageBase(self.__image_path)
+        img.encrypt(Text(msg), key).save(encrypted_image_path, 'BMP')
 
     def save_encrypted_image_bash(self, msg, key, new_name=None):
 
@@ -177,25 +193,11 @@ class CryptImageSave(CryptImage):
             new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.bmp'
 
         # saves encrypted image in work directory
-        self._encrypt(self.__image_path, msg, key).save(new_name, 'BMP')
+
+        img = ImageBase(self.__image_path)
+        img.encrypt(Text(msg), key).save(new_name, 'BMP')
         return new_name
 
     def get_msg_from_image(self, key: str) -> str:
-        return self._decrypt(self.__image_path, key).strip()
-
-
-def main():
-    import cProfile
-    import pstats
-
-    with cProfile.Profile() as pr:
-        crc = CryptImageSave('')
-        crc._encrypt('../images/test4k.jpg', 'message', 'key').save('res.bmp', 'BMP')
-
-    stats = pstats.Stats(pr)
-    stats.sort_stats(pstats.SortKey.TIME)
-    stats.print_stats()
-
-
-if __name__ == '__main__':
-    main()
+        img = ImageBase(self.__image_path)
+        return img.decrypt(key)
