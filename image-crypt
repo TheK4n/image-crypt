@@ -66,6 +66,9 @@ def decrypt(image, key):
     except ValueError:
         print("Wrong passphrase!", file=stderr)
         return
+    except WrongImage:
+        print("Wrong Image!", file=stderr)
+        return
     else:
         print(res)
 

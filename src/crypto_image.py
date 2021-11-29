@@ -7,10 +7,14 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Random import get_random_bytes
 import os
 
-__all__ = ['CryptImageSave', 'MoreThanImgError']
+__all__ = ['CryptImageSave', 'MoreThanImgError', 'WrongImage']
 
 
 class MoreThanImgError(Exception):
+    pass
+
+
+class WrongImage(Exception):
     pass
 
 
@@ -21,6 +25,9 @@ def get_sha512(passwd: str) -> str:
 class Pixel:
 
     def __init__(self, color: (int, int, int)):
+
+        if not isinstance(color, tuple) or len(color) < 3:
+            raise WrongImage
         self.__color = color
 
     @staticmethod
@@ -137,6 +144,7 @@ class ImageBase:
                     break
 
                 p = Pixel(self.__pix[i])
+
                 img_new.point(i, p.encrypt(char))
                 n += 1
                 checked.append(i)

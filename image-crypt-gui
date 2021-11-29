@@ -6,7 +6,7 @@ import os.path
 
 from PyQt5 import QtGui
 
-from src.crypto_image import MoreThanImgError, CryptImageSave
+from src.crypto_image import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from src import design
 
@@ -62,6 +62,14 @@ class MainWindow(QMainWindow, design.UiMainWindow):
             error_dialog.setWindowTitle("Error")
             error_dialog.exec_()
             return
+        except WrongImage:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Wrong image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
 
     def btn_load_image_clicked_dec(self):
         directory = QFileDialog.getOpenFileName(self, "Choose image", filter='*.jpg *.bmp *.png')[0]
@@ -84,8 +92,23 @@ class MainWindow(QMainWindow, design.UiMainWindow):
         try:
             res = crt.get_msg_from_image(self.lineEdit_2.text())
         except ValueError:
-            self.Debug_area_2.setText('Wrong passphrase')
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Wrong passphrase!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
             return
+
+        except WrongImage:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Wrong image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
         self.text_output.setText(res)
 
         if self.checkBox.isChecked():
