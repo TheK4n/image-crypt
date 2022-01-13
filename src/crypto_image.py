@@ -1,11 +1,14 @@
+import ast
 import os.path
 from random import seed, randint
 from hashlib import sha512, scrypt
 from PIL import Image, ImageDraw
 from base64 import b64encode, b64decode
-from Cryptodome.Cipher import AES
+from Cryptodome.Cipher import AES, PKCS1_OAEP
 from Cryptodome.Random import get_random_bytes
+from Cryptodome.PublicKey import RSA
 import os
+
 
 __all__ = ['CryptImageSave', 'MoreThanImgError', 'WrongImage']
 
@@ -31,8 +34,8 @@ class Pixel:
         self.__color = color
 
     @staticmethod
-    def __get_encrypted_color(this_color: int, char: str) -> int:
-        this_char = ord(char)
+    def __get_encrypted_color(this_color: int, char: int) -> int:
+        this_char = char
         if this_char > 1000:
             this_char -= 890
 
@@ -47,7 +50,8 @@ class Pixel:
         return new_color
 
     @staticmethod
-    def __get_decrypted_char(new_color: int) -> str:
+    def __get_decrypted_char(new_color: int) -> int:
+
         this_char = 0
         this_char |= (new_color & 0x70000) >> 11  # 00000111 00000000 00000000 -> 00000000 00000000 11100000
         this_char |= (new_color & 0x300) >> 5  # 00000000 00000011 00000000 -> 00000000 00000000 00011000
@@ -56,14 +60,14 @@ class Pixel:
         if this_char > 130:
             this_char += 890
 
-        return chr(this_char)
+        return this_char
 
     def __rgb_to_dec(self):
         """Возвращает число, переводит RGB в десятичный формат"""
         r, g, b = self.__color[:3]
         return b * 65536 + g * 256 + r
 
-    def encrypt(self, char: str):
+    def encrypt(self, char: int):
         return self.__get_encrypted_color(self.__rgb_to_dec(), char)
 
     def decrypt(self):
@@ -96,6 +100,20 @@ class Text:
         self.__text = cipher.decrypt_and_verify(cipher_text, tag).decode('utf-8')
         return self
 
+    def encrypt_rsa(self, pub_key):
+
+        pub = RSA.importKey(open(pub_key).read())
+        encryptor = PKCS1_OAEP.new(pub)
+
+        self.__text = str(encryptor.encrypt(self.__text.encode()))
+        return self
+
+    def decrypt_rsa(self, priv_key):
+        priv = RSA.importKey(open(priv_key).read())
+        decryptor = PKCS1_OAEP.new(priv)
+        self.__text = decryptor.decrypt(ast.literal_eval(str(self.__text)))
+        return self
+
     def get(self) -> str:
         return self.__text
 
@@ -118,17 +136,15 @@ class ImageBase:
         while True:
             yield randint(0, width), randint(0, height)
 
-    def encrypt(self, message: Text, key: str) -> Image:
-        msg = message.encrypt(key).get()
+    def encrypt(self, msg: str, key: str) -> Image:
         msg += '\0'
-
         if len(msg) > self.__size:
             raise MoreThanImgError(f'Length of message <{len(msg)}> more than image <{self.__size}>')
 
         img_new = ImageDraw.Draw(self.__img)
 
         checked = []
-        gen_msg = (i for i in msg)  # генератор
+        gen_msg = (i for i in msg.encode())  # генератор
         seed(get_sha512(key))
         n = 0  # счетчик
         for i in self.__gen_coords():
@@ -155,7 +171,7 @@ class ImageBase:
     def decrypt(self, key: str) -> str:
 
         checked = []
-        msg = ''
+        msg = []
         seed(get_sha512(key))
         n = 0
         for i in self.__gen_coords():
@@ -164,17 +180,18 @@ class ImageBase:
             p = Pixel(self.__pix[i])
             char = p.decrypt()
             n += 1
-            if char == '\0':  # завершает цикл когда дошел до метки
+            if chr(char) == '\0':  # завершает цикл когда дошел до метки
                 break
+
             if i in checked:
                 continue
+
             else:
                 checked.append(i)
-                msg += char
-
+                msg.append(char)
+        print(msg)
         seed()  # возвращает зерно рандомизатора в None
-        t = Text(msg)
-        return t.decrypt(key).get().strip()
+        return ''.join(map(chr, msg))
 
 
 class CryptImageSave:
@@ -193,7 +210,8 @@ class CryptImageSave:
         # saves encrypted image in source image directory
 
         img = ImageBase(self.__image_path)
-        img.encrypt(Text(msg), key).save(encrypted_image_path, 'BMP')
+        t = Text(msg).encrypt(key).get().strip()
+        img.encrypt(t, key).save(encrypted_image_path, 'BMP')
 
     def save_encrypted_image_bash(self, msg, key, new_name=None):
 
@@ -203,9 +221,36 @@ class CryptImageSave:
         # saves encrypted image in work directory
 
         img = ImageBase(self.__image_path)
-        img.encrypt(Text(msg), key).save(new_name, 'BMP')
+        t = Text(msg).encrypt(key).get().strip()
+        img.encrypt(t, key).save(new_name, 'BMP')
+        return new_name
+
+    def save_encrypted_image_rsa_gui(self, msg: str, key: str):
+        encrypted_image_path = os.path.join(os.path.dirname(self.__image_path),
+                                            f'{self._get_filename_without_extension(self.__image_path)}_encrypted.bmp')
+
+        # saves encrypted image in source image directory
+
+        img = ImageBase(self.__image_path)
+        t = Text(msg).encrypt_rsa(key).get()
+        img.encrypt(t, key).save(encrypted_image_path, 'BMP')
+
+    def save_encrypted_image_rsa_bash(self, msg, key, new_name=None):
+
+        if new_name is None:
+            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.bmp'
+
+        # saves encrypted image in work directory
+
+        img = ImageBase(self.__image_path)
+        t = Text(msg).encrypt_rsa(key).get()
+        img.encrypt(t, key).save(new_name, 'BMP')
         return new_name
 
     def get_msg_from_image(self, key: str) -> str:
         img = ImageBase(self.__image_path)
-        return img.decrypt(key)
+        return Text(img.decrypt(key)).decrypt(key).get().strip()
+
+    def get_msg_rsa(self, key) -> str:
+        img = ImageBase(self.__image_path)
+        return Text(img.decrypt(key)).decrypt_rsa(key).get().strip()
