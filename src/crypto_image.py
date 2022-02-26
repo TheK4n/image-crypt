@@ -105,13 +105,14 @@ class Text:
         pub = RSA.importKey(open(pub_key).read())
         encryptor = PKCS1_OAEP.new(pub)
 
-        self.__text = str(encryptor.encrypt(self.__text.encode()))
+        self.__text = encryptor.encrypt(self.__text.encode())
+        self.__text = b64encode(self.__text).decode()
         return self
 
     def decrypt_rsa(self, priv_key):
         priv = RSA.importKey(open(priv_key).read())
         decryptor = PKCS1_OAEP.new(priv)
-        self.__text = decryptor.decrypt(ast.literal_eval(str(self.__text)))
+        self.__text = decryptor.decrypt(b64decode(self.__text)).decode()
         return self
 
     def get(self) -> str:
@@ -189,7 +190,6 @@ class ImageBase:
             else:
                 checked.append(i)
                 msg.append(char)
-        print(msg)
         seed()  # возвращает зерно рандомизатора в None
         return ''.join(map(chr, msg))
 
@@ -233,7 +233,7 @@ class CryptImageSave:
 
         img = ImageBase(self.__image_path)
         t = Text(msg).encrypt_rsa(key).get()
-        img.encrypt(t, key).save(encrypted_image_path, 'BMP')
+        img.encrypt(t, '1').save(encrypted_image_path, 'BMP')
 
     def save_encrypted_image_rsa_bash(self, msg, key, new_name=None):
 
@@ -253,4 +253,4 @@ class CryptImageSave:
 
     def get_msg_rsa(self, key) -> str:
         img = ImageBase(self.__image_path)
-        return Text(img.decrypt(key)).decrypt_rsa(key).get().strip()
+        return Text(img.decrypt('1')).decrypt_rsa(key).get().strip()

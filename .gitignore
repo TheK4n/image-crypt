@@ -3,5 +3,4 @@
 /venv/
 /.run/
 *.py[cod]
-/results/encrypted_[2-9].bmp
-/results/res.txt
+images/*_encrypted*
