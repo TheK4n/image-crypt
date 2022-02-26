@@ -8,25 +8,40 @@ from PyQt5 import QtGui
 
 from src.crypto_image import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
-from src import design
+from src import design_rsa
 
 
 project_path = Path(__file__).parent
 
 
-class MainWindow(QMainWindow, design.UiMainWindow):
+class MainWindow(QMainWindow, design_rsa.Ui_MainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setup_ui(self)
+        self.setupUi(self)
 
         self.image_directory_dec = None
         self.image_directory_enc = None
+        self.image_directory_rsa_enc = None
+        self.image_directory_rsa_dec = None
+        self.pub_key_path = None
+        self.priv_key_path = None
 
         self.pushButton.clicked.connect(self.btn_load_image_clicked_enc)
         self.pushButton_4.clicked.connect(self.encrypt_image)
         self.pushButton_2.clicked.connect(self.btn_load_image_clicked_dec)
         self.pushButton_3.clicked.connect(self.decrypt_image)
+
+        self.pushButton_5.clicked.connect(self.btn_load_image_clicked_enc_rsa)
+        # self.pushButton_5.clicked.connect(self.encrypt_rsa_image)
+        self.pushButton_15.clicked.connect(self.btn_load_image_clicked_dec_rsa)
+
+        self.pushButton_7.clicked.connect(self.load_pub_key)
+        self.pushButton_17.clicked.connect(self.load_priv_key)
+
+        self.pushButton_6.clicked.connect(self.encrypt_rsa_image)
+        self.pushButton_16.clicked.connect(self.decrypt_image_rsa)
+
 
     def btn_load_image_clicked_enc(self):
         directory = QFileDialog.getOpenFileName(self, "Choose image", filter='*.jpg *.bmp *.png')[0]
@@ -34,6 +49,109 @@ class MainWindow(QMainWindow, design.UiMainWindow):
         if directory != '':
             self.image_directory_enc = directory
             self.Debug_area_1.setText('Image to encrypt: ' + os.path.basename(directory))
+
+    def btn_load_image_clicked_enc_rsa(self):
+        directory = QFileDialog.getOpenFileName(self, "Choose image", filter='*.jpg *.bmp *.png')[0]
+
+        if directory != '':
+            self.image_directory_rsa_enc = directory
+            self.Debug_area_6.setText('Image to encrypt: ' + os.path.basename(directory))
+
+    def btn_load_image_clicked_dec_rsa(self):
+        directory = QFileDialog.getOpenFileName(self, "Choose image", filter='*.jpg *.bmp *.png')[0]
+
+        if directory != '':
+            self.image_directory_rsa_dec = directory
+            self.Debug_area_5.setText('Image to encrypt: ' + os.path.basename(directory))
+
+    def load_pub_key(self):
+        directory = QFileDialog.getOpenFileName(self, "Choose public key", filter='*.pub')[0]
+
+        if directory != '':
+            self.pub_key_path = directory
+            self.Debug_area_6.setText('Public key: ' + os.path.basename(directory))
+
+    def load_priv_key(self):
+        directory = QFileDialog.getOpenFileName(self, "Choose private key")[0]
+
+        if directory != '':
+            self.priv_key_path = directory
+            self.Debug_area_5.setText('Private key: ' + os.path.basename(directory))
+
+    def encrypt_rsa_image(self):
+        if self.image_directory_rsa_enc is None:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Choose image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
+        try:
+
+            crt = CryptImageSave(self.image_directory_rsa_enc)
+
+            crt.save_encrypted_image_rsa_gui(self.text_input_2.toPlainText(), self.pub_key_path)
+
+            self.Debug_area_6.setText(f'Encrypted image saved')
+
+        except MoreThanImgError:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Message size more than image size!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+        except WrongImage:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Wrong image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
+    def decrypt_image_rsa(self):
+
+        if self.image_directory_rsa_dec is None:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Choose image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
+        crt = CryptImageSave(self.image_directory_rsa_dec)
+        try:
+            res = crt.get_msg_rsa(self.priv_key_path)
+        # except ValueError as e:
+        #     error_dialog = QMessageBox()
+        #     error_dialog.setIcon(QMessageBox.Critical)
+        #     error_dialog.setText("Error")
+        #     error_dialog.setInformativeText('Wrong passphrase!')
+        #     error_dialog.setWindowTitle("Error")
+        #     error_dialog.exec_()
+        #     return
+        except WrongImage:
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("Error")
+            error_dialog.setInformativeText('Wrong image!')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
+        self.text_output_3.setText(res)
+
+        if self.checkBox_3.isChecked():
+            with open(os.path.join(os.path.dirname(self.image_directory_dec), 'res.txt'), 'w') as file:
+                file.write(res)
+            self.Debug_area_5.setText('Successfully decrypted image, saved to res.txt')
+        else:
+            self.Debug_area_5.setText('Successfully decrypted image')
 
     def encrypt_image(self):
 

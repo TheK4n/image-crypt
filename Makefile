@@ -9,7 +9,7 @@ install:
 	python3 -m pip install -r requirements.txt || true
 	chmod u+x $(SCNAME) $(SCGNAME) || true
 	ln -s $(PWD)/$(SCNAME) $(PREFIX)/$(SCNAME) || true
-	ln -s $(PWD)/$(SCGNAME) $(PREFIX)/$(SCGNAME) || true
+	ln -s $(PWD)/$(SCGNAME) $(PREFIX)/$(SCGNAME)
 
 uninstall:
 	rm $(PREFIX)/$(SCNAME) || true
