@@ -14,6 +14,7 @@
 * [Project description](#chapter-0)
 * [Installation](#chapter-1)
 * [Usage](#chapter-2)
+* [FAQ](#chapter-3)
 
 
 <a id="chapter-0"></a>
@@ -124,5 +125,18 @@ echo "test message" | image-crypt -e image.png -o test_image.bmp
 
 image-crypt -d test_image.bmp > res.txt
 ```
+
+<a id="chapter-3"></a>
+# FAQ
+
+> *Q*: What is the level of cryptographic strength?
+
+> *A*: It uses symmetric and asymmetric encryption methods such as AES and RSA.
+
+<br>
+
+> *Q*: Does it pack the image data into text?
+
+> *A*: No, it's packing text into image pixels.
 
 <h1 align="center"><a href="#top">▲</a></h1>
