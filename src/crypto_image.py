@@ -1,4 +1,3 @@
-import ast
 import os.path
 from random import seed, randint
 from hashlib import sha512, scrypt
@@ -8,7 +7,6 @@ from Cryptodome.Cipher import AES, PKCS1_OAEP
 from Cryptodome.Random import get_random_bytes
 from Cryptodome.PublicKey import RSA
 import os
-
 
 __all__ = ['CryptImageSave', 'MoreThanImgError', 'WrongImage']
 
@@ -62,8 +60,8 @@ class Pixel:
 
         return this_char
 
-    def __rgb_to_dec(self):
-        """Возвращает число, переводит RGB в десятичный формат"""
+    def __rgb_to_dec(self) -> int:
+        """Переводит RGB в десятичный формат"""
         r, g, b = self.__color[:3]
         return b * 65536 + g * 256 + r
 
@@ -79,7 +77,6 @@ class Text:
         self.__text = text
 
     def __parse_hash(self, block_size=24) -> tuple:
-
         return tuple(map(b64decode, (self.__text[:block_size], self.__text[block_size:block_size * 2],
                                      self.__text[block_size * 2:block_size * 3], self.__text[block_size * 3:])))
 
@@ -89,7 +86,8 @@ class Text:
             key.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
         cipher_config = AES.new(private_key, AES.MODE_GCM)
         cipher_text, tag = cipher_config.encrypt_and_digest(self.__text.encode('utf-8'))
-        self.__text = "".join(map(lambda x: b64encode(x).decode("utf-8"), (salt, cipher_config.nonce, tag, cipher_text)))
+        self.__text = "".join(
+            map(lambda x: b64encode(x).decode("utf-8"), (salt, cipher_config.nonce, tag, cipher_text)))
         return self
 
     def decrypt(self, key: str):
@@ -101,7 +99,6 @@ class Text:
         return self
 
     def encrypt_rsa(self, pub_key):
-
         pub = RSA.importKey(open(pub_key).read())
         encryptor = PKCS1_OAEP.new(pub)
 
@@ -233,7 +230,10 @@ class CryptImageSave:
 
         img = ImageBase(self.__image_path)
         t = Text(msg).encrypt_rsa(key).get()
-        img.encrypt(t, '1').save(encrypted_image_path, 'BMP')
+
+        # static key for image randomizer
+        seed_key = "1"
+        img.encrypt(t, seed_key).save(encrypted_image_path, 'BMP')
 
     def save_encrypted_image_rsa_bash(self, msg, key, new_name=None):
 
@@ -253,4 +253,7 @@ class CryptImageSave:
 
     def get_msg_rsa(self, key) -> str:
         img = ImageBase(self.__image_path)
-        return Text(img.decrypt('1')).decrypt_rsa(key).get().strip()
+
+        # static key for image randomizer
+        seed_key = "1"
+        return Text(img.decrypt(seed_key)).decrypt_rsa(key).get().strip()
