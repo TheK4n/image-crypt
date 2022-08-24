@@ -202,29 +202,29 @@ class CryptImageSave:
 
     def save_encrypted_image_gui(self, msg: str, key: str):
         encrypted_image_path = os.path.join(os.path.dirname(self.__image_path),
-                                            f'{self._get_filename_without_extension(self.__image_path)}_encrypted.bmp')
+                                            f'{self._get_filename_without_extension(self.__image_path)}_encrypted.png')
 
         # saves encrypted image in source image directory
 
         img = ImageBase(self.__image_path)
         t = Text(msg).encrypt(key).get().strip()
-        img.encrypt(t, key).save(encrypted_image_path, 'BMP')
+        img.encrypt(t, key).save(encrypted_image_path, 'PNG')
 
     def save_encrypted_image_bash(self, msg, key, new_name=None):
 
         if new_name is None:
-            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.bmp'
+            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.png'
 
         # saves encrypted image in work directory
 
         img = ImageBase(self.__image_path)
         t = Text(msg).encrypt(key).get().strip()
-        img.encrypt(t, key).save(new_name, 'BMP')
+        img.encrypt(t, key).save(new_name, 'PNG')
         return new_name
 
     def save_encrypted_image_rsa_gui(self, msg: str, key: str):
         encrypted_image_path = os.path.join(os.path.dirname(self.__image_path),
-                                            f'{self._get_filename_without_extension(self.__image_path)}_encrypted.bmp')
+                                            f'{self._get_filename_without_extension(self.__image_path)}_encrypted.png')
 
         # saves encrypted image in source image directory
 
@@ -233,18 +233,18 @@ class CryptImageSave:
 
         # static key for image randomizer
         seed_key = "1"
-        img.encrypt(t, seed_key).save(encrypted_image_path, 'BMP')
+        img.encrypt(t, seed_key).save(encrypted_image_path, 'PNG')
 
     def save_encrypted_image_rsa_bash(self, msg, key, new_name=None):
 
         if new_name is None:
-            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.bmp'
+            new_name = self._get_filename_without_extension(self.__image_path) + '_encrypted.png'
 
         # saves encrypted image in work directory
 
         img = ImageBase(self.__image_path)
         t = Text(msg).encrypt_rsa(key).get()
-        img.encrypt(t, key).save(new_name, 'BMP')
+        img.encrypt(t, key).save(new_name, 'PNG')
         return new_name
 
     def get_msg_from_image(self, key: str) -> str:
