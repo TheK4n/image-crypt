@@ -1,0 +1,8 @@
+.git
+venv
+.gitignore
+.github
+.idea
+images
+Makefile
+README.md

@@ -126,6 +126,17 @@ echo "test message" | image-crypt -e image.png -o test_image.bmp
 image-crypt -d test_image.bmp > res.txt
 ```
 
+### Docker:
+
+**Example:**
+```bash
+docker run --rm -it -v $(pwd):/image-crypt -w /image-crypt image-crypt image-crypt -e image.png
+```
+Enter the text, press <kbd>Ctrl</kdb> + <kdb>d</kdb> and enter the passphrase
+
+**Result**: Encrypted image in work directory
+
+
 <a id="chapter-3"></a>
 # FAQ
 
