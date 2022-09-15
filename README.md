@@ -126,6 +126,8 @@ echo "test message" | image-crypt -e image.png -o test_image.bmp
 image-crypt -d test_image.bmp > res.txt
 ```
 
+<br>
+
 ### Docker:
 
 **Example:**
