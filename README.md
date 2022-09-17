@@ -137,7 +137,7 @@ docker run --rm -it -v $(pwd):/image-crypt -w /image-crypt thek4n/image-crypt im
 > `/image-crypt` - Container\`s directory\
 > `thek4n/image-crypt` - Image on DockerHub\
 > `image-crypt` - Program name\
-> `image.png` - Your image in <ins>your</ins> work directory
+> `image.png` - Your image in <ins>your work directory</ins>
 
 Enter the text, press <kbd>Ctrl</kbd> + <kbd>d</kbd> and enter the passphrase
 
