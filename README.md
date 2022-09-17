@@ -132,8 +132,11 @@ image-crypt -d test_image.bmp > res.txt
 
 **Example:**
 ```bash
-docker run --rm -it -v $(pwd):/image-crypt -w /image-crypt image-crypt image-crypt -e image.png
+docker run --rm -it -v $(pwd):/image-crypt -w /image-crypt thek4n/image-crypt image-crypt -e image.png
 ```
+> `/image-crypt` - Container\`s directory
+> `thek4n/image-crypt` - Image on DockerHub
+> `image-crypt` - Program name
 > `image.png` - Your image in your work directory
 
 Enter the text, press <kbd>Ctrl</kbd> + <kbd>d</kbd> and enter the passphrase
