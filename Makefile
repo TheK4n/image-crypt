@@ -9,8 +9,8 @@ reqs:
 	python3 -m pip install -r requirements.txt
 
 install:
-	install -Dm755 $(SCNAME) $(DESTDIR)$(PREFIX)/bin
-	install -Dm755 $(SCGNAME) $(DESTDIR)$(PREFIX)/bin
+	install -Dm755 $(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
+	install -Dm755 $(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
 
 uninstall:
 	rm $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
