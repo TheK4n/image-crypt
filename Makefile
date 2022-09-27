@@ -10,6 +10,7 @@ reqs:
 
 install:
 	chmod 755 $(SCNAME) $(SCGNAME)
+	mkdir -p $(PREFIX)/bin
 	ln -s $(PWD)/$(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
 	ln -s $(PWD)/$(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
 
