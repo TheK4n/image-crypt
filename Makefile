@@ -1,7 +1,7 @@
 SCNAME = image-crypt
 SCGNAME = image-crypt-gui
 DESTDIR :=
-PREFIX := ~/.local
+PREFIX := /usr/local
 
 all: install
 
@@ -10,7 +10,7 @@ reqs:
 
 install:
 	chmod 755 $(SCNAME) $(SCGNAME)
-	mkdir -p $(PREFIX)/bin
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	ln -s $(PWD)/$(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
 	ln -s $(PWD)/$(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
 
