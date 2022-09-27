@@ -109,21 +109,21 @@ For **encryption**:
 ```bash
 image-crypt -e images/test.jpg
 ```
-**Result**: saved image with default name _image_encrypted.bmp_
+**Result**: saved image with default name _image_encrypted.png_
 
 
 For **decryption**: 
 ```bash
-image-crypt -d test_encrypted.bmp
+image-crypt -d test_encrypted.png
 ```
 **Result**: decrypted text
 
 \
 **Example:**
 ```bash
-echo "test message" | image-crypt -e image.png -o test_image.bmp
+echo "test message" | image-crypt -e image.png -o test_image.png
 
-image-crypt -d test_image.bmp > res.txt
+image-crypt -d test_image.png > res.txt
 ```
 
 <br>
