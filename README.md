@@ -78,7 +78,7 @@ make
 ```
 image-crypt-gui
 ```
-[![Example](src/preview.png)]()
+[![Example](image_crypt/preview.png)]()
 
 
 
