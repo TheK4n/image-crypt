@@ -3,4 +3,7 @@
 /venv/
 /.run/
 *.py[cod]
-images/*_encrypted*
+images/*_encrypted*dist
+*.egg-info
+build
+dist

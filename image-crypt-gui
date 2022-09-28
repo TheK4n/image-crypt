@@ -6,9 +6,9 @@ import os.path
 
 from PyQt5 import QtGui
 
-from src.crypto_image import *
+from image_crypt import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
-from src import design_rsa
+from image_crypt import design_rsa
 
 
 project_path = Path(__file__).parent

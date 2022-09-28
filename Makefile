@@ -5,18 +5,14 @@ PREFIX := /usr/local
 
 all: install
 
-reqs:
-	python3 -m pip install -r requirements.txt
-
 install:
-	chmod 755 $(SCNAME) $(SCGNAME)
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	ln -s $(PWD)/$(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
-	ln -s $(PWD)/$(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
+	python setup.py install '--prefix=$(PREFIX)' '--root=$(DESTDIR)'
+	install -Dm755 $(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
+	install -Dm755 $(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
 
 uninstall:
-	rm $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
-	rm $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
+	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
+	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
 
 clean:
 	rm -rf images .github .git .gitignore LICENSE README.md src/preview.png src/mainwindow.ui
