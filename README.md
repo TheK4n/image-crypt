@@ -63,7 +63,12 @@ if this_char > 130:
 <a id="chapter-1"></a>
 ## Installation:
 
-Clone repository and installing dependencies:
+### From AUR
+```bash
+yay -S image-crypt
+```
+
+### Build from source
 
 ```bash
 git clone https://github.com/TheK4n/ImageCrypt.git
