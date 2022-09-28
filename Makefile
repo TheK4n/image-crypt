@@ -13,6 +13,3 @@ install:
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
-
-clean:
-	rm -rf images .github .git .gitignore LICENSE README.md src/preview.png src/mainwindow.ui
