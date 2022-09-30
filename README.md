@@ -83,7 +83,7 @@ make
 ```
 image-crypt-gui
 ```
-[![Example](image_crypt/preview.png)]()
+[![Example](assets/preview.png)]()
 
 
 

@@ -6,7 +6,7 @@ import os.path
 
 from PyQt5 import QtGui
 
-from image_crypt import *
+from image_crypt import CryptImageSave, MoreThanImgError, WrongImage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from image_crypt import design_rsa
 
