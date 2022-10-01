@@ -9,7 +9,7 @@ install:
 	python setup.py install '--prefix=$(PREFIX)' '--root=$(DESTDIR)'
 	install -Dm755 $(SCNAME) $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
 	install -Dm755 $(SCGNAME) $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
-	install -Dm644 LICENSE $(DESTDIR)/usr/share/licenses/image-crypt/LICENSE
+	install -Dm644 LICENSE $(DESTDIR)$(PREFIX)/share/licenses/image-crypt/LICENSE
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
