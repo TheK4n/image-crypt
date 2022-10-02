@@ -3,6 +3,8 @@ SCGNAME = image-crypt-gui
 DESTDIR :=
 PREFIX := /usr/local
 
+.PHONY: all install uninstall
+
 all: install
 
 install:
@@ -14,3 +16,4 @@ install:
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCNAME)
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(SCGNAME)
+	rm -rf $(DESTDIR)$(PREFIX)/share/licenses/image-crypt
