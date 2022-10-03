@@ -4,5 +4,12 @@ venv
 .github
 .idea
 images
-Makefile
 README.md
+Makefile
+build
+dist
+assets
+PKGBUILD
+requirements.txt
+Dockerfile
+image-crypt-gui
