@@ -1,5 +1,5 @@
 SCNAME = image-crypt
-SCGNAME = image-crypt-gui
+SCGNAME = image-crypt-qt
 DESTDIR :=
 PREFIX := /usr/local
 

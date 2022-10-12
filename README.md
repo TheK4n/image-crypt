@@ -81,7 +81,7 @@ make
 
 ### GUI:
 ```
-image-crypt-gui
+image-crypt-qt
 ```
 [![Example](assets/preview.png)]()
 
