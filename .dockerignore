@@ -12,4 +12,4 @@ assets
 PKGBUILD
 requirements.txt
 Dockerfile
-image-crypt-gui
+image-crypt-qt
