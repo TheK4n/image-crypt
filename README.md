@@ -68,12 +68,22 @@ if this_char > 130:
 yay -S image-crypt
 ```
 
+
+### Install by pacman (Recomended)
+
+```bash
+git clone https://github.com/TheK4n/image-crypt.git
+cd image-crypt
+makepkg -sic
+```
+
+
 ### Build from source
 
 ```bash
 git clone https://github.com/TheK4n/image-crypt.git
-cd ImageCrypt
-make
+cd image-crypt
+make install
 ```
 
 <a id="chapter-2"></a>
