@@ -69,7 +69,7 @@ yay -S image-crypt
 ```
 
 
-### Install by pacman (Recomended)
+### Install by pacman (Recommended)
 
 ```bash
 git clone https://github.com/TheK4n/image-crypt.git
@@ -78,7 +78,7 @@ makepkg -sic
 ```
 
 
-### Build from source
+### Install from source
 
 ```bash
 git clone https://github.com/TheK4n/image-crypt.git
