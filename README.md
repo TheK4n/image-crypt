@@ -97,7 +97,7 @@ image-crypt-qt
 
 
 
-### Bash:
+### CLI:
 
 ```bash
 image-crypt --help
