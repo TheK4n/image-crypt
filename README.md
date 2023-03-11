@@ -22,7 +22,7 @@
 
 [Project](https://github.com/AlexGyver/crypto) [AlexGyver](https://github.com/AlexGyver) on Python by [TheK4n](https://github.com/TheK4n)
 \
-Steganography encryption script. It can hide text inside PNG image pixels. It uses AES or RSA enctyption methods.
+Steganography encryption tool. It can hide text inside PNG image pixels. It uses AES or RSA encryption methods.
 \
 _Design by [Пашушка](https://github.com/PAPASKAS)_
 
@@ -74,7 +74,7 @@ image-crypt --help
 ```text
 usage: image-crypt [-h] (-e | -d) [-o OUTPUT] images [images ...]
 
-Stenography encryption tool
+Steganography encryption tool
 
 positional arguments:
   images                path to image to encrypt of decrypt

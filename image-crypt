@@ -7,7 +7,7 @@ from image_crypt import CryptImageSave, MoreThanImgError, WrongImage
 
 
 argparse.ArgumentParser()
-parser = argparse.ArgumentParser(description='Stenography encryption tool')
+parser = argparse.ArgumentParser(description='Steganography encryption tool')
 
 parser.add_argument(dest='images', nargs='+',
                     help='path to image to encrypt of decrypt')
